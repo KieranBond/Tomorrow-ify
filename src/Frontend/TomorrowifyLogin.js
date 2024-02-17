@@ -10,10 +10,11 @@ function signUp()
 
 // Redirect the user to Spotify authorization endpoint
 function SpotifyAuthRedirect() {
-    var client_id = 'abc';
+    var client_id = "0dd26d11f1f9480c926c221561c67c92";
 
     //Get the current URL
     var redirect_uri = window.location.href;
+    console.log("Offering redirect to: " + redirect_uri);
     var scope = 'playlist-modify-public playlist-modify-private playlist-read-private';//Probably need more permissions e.g. 
 
     var url = 'https://accounts.spotify.com/authorize';
