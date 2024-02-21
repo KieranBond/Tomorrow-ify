@@ -58,8 +58,8 @@ app.MapPost("/{token}", async (string token, Configuration configuration) =>
         .Select(t => t.Track as FullTrack)
         .Where(t => t?.Id != null);
 
-    if !tomorrowTracks.Any()
-        return;
+    if (!tomorrowTracks.Any())
+        return Results.Ok();
 
      await spotify.Playlists.ReplaceItems(todayPlaylist.Id!,
          new PlaylistReplaceItemsRequest(tomorrowTracks.Take(100).Select(t => t!.Uri).ToList())
