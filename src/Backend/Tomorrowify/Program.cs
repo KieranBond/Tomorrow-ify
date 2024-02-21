@@ -58,22 +58,22 @@ app.MapPost("/{token}", async (string token, Configuration configuration) =>
         .Select(t => t.Track as FullTrack)
         .Where(t => t?.Id != null);
 
-    if (tomorrowTracks.Any())
-    {
-        await spotify.Playlists.ReplaceItems(todayPlaylist.Id!,
-            new PlaylistReplaceItemsRequest(tomorrowTracks.Take(100).Select(t => t!.Uri).ToList())
-        );
+    if !tomorrowTracks.Any()
+        Return;
 
-        if (tomorrowTracks.Count() > 100)
+     await spotify.Playlists.ReplaceItems(todayPlaylist.Id!,
+         new PlaylistReplaceItemsRequest(tomorrowTracks.Take(100).Select(t => t!.Uri).ToList())
+     );
+
+    if (tomorrowTracks.Count() > 100)
+    {
+        var remainingTracks = tomorrowTracks.Skip(100);
+        var tracksToAdd = remainingTracks.Chunk(100);
+        foreach (var chunk in tracksToAdd)
         {
-            var remainingTracks = tomorrowTracks.Skip(100);
-            var tracksToAdd = remainingTracks.Chunk(100);
-            foreach (var chunk in tracksToAdd)
-            {
-                await spotify.Playlists.AddItems(tomorrowPlaylist.Id!,
-                    new PlaylistAddItemsRequest(chunk.Select(t => t!.Uri).ToList())
-                );
-            }
+            await spotify.Playlists.AddItems(tomorrowPlaylist.Id!,
+                new PlaylistAddItemsRequest(chunk.Select(t => t!.Uri).ToList())
+            );
         }
     }
 
