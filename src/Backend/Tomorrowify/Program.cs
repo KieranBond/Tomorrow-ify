@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using SpotifyAPI.Web;
 using Tomorrowify;
 using Tomorrowify.Configuration;
@@ -9,6 +7,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
+
+// TODO: Add tighter CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 // Makes this work as a Lambda function in AWS or as a normal API on localhost (Kestrel)
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
@@ -33,20 +42,31 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors();
+
 app.MapPost("/signup/{token}", async (string token, Configuration configuration) =>
 {
-    var response = await new OAuthClient()
-        .RequestToken(
-            new AuthorizationCodeTokenRequest(
-                Constants.ClientId,
-                configuration.ClientSecret!,
-                token,
-                new Uri("http://127.0.0.1:8080")));
+    AuthorizationCodeTokenResponse response;
+    try 
+    {
+        response = await new OAuthClient()
+            .RequestToken(
+                new AuthorizationCodeTokenRequest(
+                    Constants.ClientId,
+                    configuration.ClientSecret!,
+                    token,
+                    new Uri("http://127.0.0.1:8080")));
+    }
+    catch (Exception e)
+    {
+        return Results.BadRequest(e.Message);
+    }
 
     // We can use this token indefinitely to keep our API calls working without re-auth
     var refreshToken = response.RefreshToken;
 
     // TODO: Save refresh token
+
     return Results.Ok(refreshToken);
 });
 
