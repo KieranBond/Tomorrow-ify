@@ -30,7 +30,6 @@ and the Web API enabled.
 Once you have done that, retrieve the 'client secret' and run this command in the `src/Backend/Tomorrowify` folder:
 `dotnet user-secrets set "ClientSecret" "12345-yoursecretid"`.
 
-
 You should now be able to run the backend and interact with the Spotify API.
 
 ## Contributors

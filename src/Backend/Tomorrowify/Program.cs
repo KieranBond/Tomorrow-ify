@@ -8,6 +8,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 
+// TODO: Add tighter CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 // Makes this work as a Lambda function in AWS or as a normal API on localhost (Kestrel)
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
@@ -31,25 +42,53 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors();
+
+app.MapPost("/signup/{token}", async (string token, Configuration configuration) =>
+{
+    AuthorizationCodeTokenResponse response;
+    try 
+    {
+        response = await new OAuthClient()
+            .RequestToken(
+                new AuthorizationCodeTokenRequest(
+                    Constants.ClientId,
+                    configuration.ClientSecret!,
+                    token,
+                    new Uri("http://127.0.0.1:8080")));
+    }
+    catch (Exception e)
+    {
+        return Results.BadRequest(e.Message);
+    }
+
+    // We can use this token indefinitely to keep our API calls working without re-auth
+    var refreshToken = response.RefreshToken;
+
+    // TODO: Save refresh token
+
+    return Results.Ok(refreshToken);
+});
+
 app.MapPost("/{token}", async (string token, Configuration configuration) =>
 {
+    // Use the original refresh token to re-auth
     var response = await new OAuthClient()
         .RequestToken(
-            new AuthorizationCodeTokenRequest(
+            new AuthorizationCodeRefreshRequest(
                 Constants.ClientId,
                 configuration.ClientSecret!,
-                token, 
-                new Uri("http://127.0.0.1:8080")));
+                token));
 
     var spotify = new SpotifyClient(response.AccessToken);
     var user = await spotify.UserProfile.Current();
     var userPlaylists = await spotify.PaginateAll(await spotify.Playlists.CurrentUsers());
-    
-    var tomorrowPlaylist = 
-        userPlaylists.FirstOrDefault(p => p.Name == "Tomorrow") ?? 
+
+    var tomorrowPlaylist =
+        userPlaylists.FirstOrDefault(p => p.Name == "Tomorrow") ??
         await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Tomorrow"));
 
-    var todayPlaylist = 
+    var todayPlaylist =
         userPlaylists.FirstOrDefault(p => p.Name == "Today") ??
         await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Today"));
 
@@ -61,9 +100,9 @@ app.MapPost("/{token}", async (string token, Configuration configuration) =>
     if (!tomorrowTracks.Any())
         return Results.Ok();
 
-     await spotify.Playlists.ReplaceItems(todayPlaylist.Id!,
-         new PlaylistReplaceItemsRequest(tomorrowTracks.Take(100).Select(t => t!.Uri).ToList())
-     );
+    await spotify.Playlists.ReplaceItems(todayPlaylist.Id!,
+        new PlaylistReplaceItemsRequest(tomorrowTracks.Take(100).Select(t => t!.Uri).ToList())
+    );
 
     if (tomorrowTracks.Count() > 100)
     {
