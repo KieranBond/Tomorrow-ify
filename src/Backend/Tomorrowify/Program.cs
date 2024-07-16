@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
-using SpotifyAPI.Web;
 using Tomorrowify;
 using Tomorrowify.Configuration;
 using Tomorrowify.Endpoints;
@@ -22,7 +19,8 @@ builder.Configuration
 
 builder.Configuration.AddEnvironmentVariables(); // Take precedence over appsettings
 
-builder.Services.AddSingleton(builder.Configuration.Get<TomorrowifyConfiguration>());
+// Set up our required DI
+builder.RegisterServices();
 
 var app = builder.Build();
 
