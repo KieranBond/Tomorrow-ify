@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using SpotifyAPI.Web;
 using Tomorrowify;
 using Tomorrowify.Configuration;
+using Tomorrowify.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,7 @@ builder.Configuration
 
 builder.Configuration.AddEnvironmentVariables(); // Take precedence over appsettings
 
-builder.Services.AddSingleton(builder.Configuration.Get<Configuration>());
+builder.Services.AddSingleton(builder.Configuration.Get<TomorrowifyConfiguration>());
 
 var app = builder.Build();
 
@@ -33,70 +34,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/signup/{token}", async (string token, Configuration configuration) =>
-{
-    var response = await new OAuthClient()
-        .RequestToken(
-            new AuthorizationCodeTokenRequest(
-                Constants.ClientId,
-                configuration.ClientSecret!,
-                token,
-                new Uri("http://127.0.0.1:8080")));
-
-    // We can use this token indefinitely to keep our API calls working without re-auth
-    var refreshToken = response.RefreshToken;
-
-    // TODO: Save refresh token
-    return Results.Ok(refreshToken);
-});
-
-app.MapPost("/{token}", async (string token, Configuration configuration) =>
-{
-    // Use the original refresh token to re-auth
-    var response = await new OAuthClient()
-        .RequestToken(
-            new AuthorizationCodeRefreshRequest(
-                Constants.ClientId,
-                configuration.ClientSecret!,
-                token));
-
-    var spotify = new SpotifyClient(response.AccessToken);
-    var user = await spotify.UserProfile.Current();
-    var userPlaylists = await spotify.PaginateAll(await spotify.Playlists.CurrentUsers());
-
-    var tomorrowPlaylist =
-        userPlaylists.FirstOrDefault(p => p.Name == "Tomorrow") ??
-        await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Tomorrow"));
-
-    var todayPlaylist =
-        userPlaylists.FirstOrDefault(p => p.Name == "Today") ??
-        await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Today"));
-
-    var tomorrowTracks =
-        (await spotify.PaginateAll(await spotify.Playlists.GetItems(tomorrowPlaylist.Id!)))
-        .Select(t => t.Track as FullTrack)
-        .Where(t => t?.Id != null);
-
-    if (!tomorrowTracks.Any())
-        return Results.Ok();
-
-    await spotify.Playlists.ReplaceItems(todayPlaylist.Id!,
-        new PlaylistReplaceItemsRequest(tomorrowTracks.Take(100).Select(t => t!.Uri).ToList())
-    );
-
-    if (tomorrowTracks.Count() > 100)
-    {
-        var remainingTracks = tomorrowTracks.Skip(100);
-        var tracksToAdd = remainingTracks.Chunk(100);
-        foreach (var chunk in tracksToAdd)
-        {
-            await spotify.Playlists.AddItems(tomorrowPlaylist.Id!,
-                new PlaylistAddItemsRequest(chunk.Select(t => t!.Uri).ToList())
-            );
-        }
-    }
-
-    return Results.Ok($"Hello!");
-});
+app.RegisterEndpoints();
 
 app.Run();
