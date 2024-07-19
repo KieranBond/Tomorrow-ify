@@ -1,6 +1,8 @@
+using Tomorrowify.Dto;
+
 namespace Tomorrowify.Repositories;
 
 public interface IRefreshTokenRepository {
-    Task<IEnumerable<string>> GetAllTokens();
-    Task<bool> SaveToken(string refreshToken);
+    Task<IEnumerable<RefreshTokenDto>> GetAllTokens();
+    Task SaveToken(string refreshToken);
 }

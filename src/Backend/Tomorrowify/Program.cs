@@ -15,9 +15,12 @@ builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false)
     .AddJsonFile($"appsettings.{EnvironmentVariables.ASPNETCORE_ENVIRONMENT}.json", optional: true)
-    .AddUserSecrets<Program>(optional: true); // Store your client secret in user secrets!
+    .AddEnvironmentVariables(); // Take precedence over appsettings
 
-builder.Configuration.AddEnvironmentVariables(); // Take precedence over appsettings
+if(builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>(); // Client secrets storage in local dev
+}
 
 // Set up our required DI
 builder.RegisterServices();
