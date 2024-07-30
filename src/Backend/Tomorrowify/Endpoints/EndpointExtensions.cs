@@ -1,5 +1,6 @@
 using SpotifyAPI.Web;
 using Tomorrowify.Configuration;
+using Tomorrowify.Repositories;
 
 namespace Tomorrowify.Endpoints;
 
@@ -10,7 +11,7 @@ public static class EndpointExtensions {
         app.MapPost("/{refreshToken}", UpdatePlaylists);
     }
 
-    private static async Task<IResult> SignupToken(string token, TomorrowifyConfiguration configuration)
+    private static async Task<IResult> SignupToken(string token, TomorrowifyConfiguration configuration, IRefreshTokenRepository tokenRepository)
     {
         var response = await new OAuthClient()
             .RequestToken(
@@ -23,7 +24,11 @@ public static class EndpointExtensions {
         // We can use this token indefinitely to keep our API calls working without re-auth
         var refreshToken = response.RefreshToken;
 
-        // TODO: Save refresh token
+        var spotify = new SpotifyClient(response.AccessToken);
+        var user = await spotify.UserProfile.Current();
+        
+        await tokenRepository.SaveToken(user.Id, refreshToken);
+
         return Results.Ok(refreshToken);
     }
 

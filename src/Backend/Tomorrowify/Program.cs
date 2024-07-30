@@ -23,7 +23,7 @@ if(builder.Environment.IsDevelopment())
 }
 
 // Set up our required DI
-builder.RegisterServices();
+await builder.RegisterServices();
 
 var app = builder.Build();
 
