@@ -31,17 +31,6 @@ public sealed class DynamoDBRepository : IRefreshTokenRepository
             Token = refreshToken
         };
 
-        var existingToken = await _dynamoDbContext.LoadAsync<RefreshToken>(key);
-        if(existingToken is not null && existingToken.VersionNumber is not null)
-        {
-            token = token with { VersionNumber = existingToken.VersionNumber + 1 };
-        }
-        else
-        {
-            token.VersionNumber = 1;
-        }
-
-        // TODO: Figure out why version checking is causing us issues on updates - we're supposed to be incrementing.
-        await _dynamoDbContext.SaveAsync<RefreshToken>(token, new DynamoDBOperationConfig() { SkipVersionCheck = true });
+        await _dynamoDbContext.SaveAsync(token);
     }
 }
