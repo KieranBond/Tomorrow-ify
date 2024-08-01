@@ -8,6 +8,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 
+// TODO: Add tighter CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 // Makes this work as a Lambda function in AWS or as a normal API on localhost (Kestrel)
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
@@ -36,5 +47,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.RegisterEndpoints();
+
+app.UseCors();
 
 app.Run();
