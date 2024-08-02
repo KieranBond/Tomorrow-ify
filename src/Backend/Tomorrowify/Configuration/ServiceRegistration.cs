@@ -11,26 +11,32 @@ public static class ServiceRegistration
 {
     public async static Task<WebApplicationBuilder> RegisterServices(this WebApplicationBuilder builder)
     {
-        builder.Services.AddSingleton(builder.Configuration.Get<TomorrowifyConfiguration>());
+        var config = builder.Configuration.Get<TomorrowifyConfiguration>();
+        builder.Services.AddSingleton(config);
 
-        await builder.Services.RegisterDynamoDB();
+        await builder.Services.RegisterDynamoDB(builder.Environment.IsDevelopment(), config);
 
         return builder;
     }
 
-    private static async Task RegisterDynamoDB(this IServiceCollection serviceCollection)
+    private static async Task RegisterDynamoDB(this IServiceCollection serviceCollection, bool isDevelopmentEnvironment, TomorrowifyConfiguration configuration)
     {
-        var clientConfig = new AmazonDynamoDBConfig()
-        {
-            ServiceURL = "http://localhost:8000",
-        };
+        var clientConfig = new AmazonDynamoDBConfig();
+        AmazonDynamoDBClient dynamoDbClient;
 
-        var creds = new BasicAWSCredentials("fakeMyKeyId", "fakeSecretAccessKey");
-        var dynamoDbClient = new AmazonDynamoDBClient(creds, clientConfig);
-        var dynamoDbContext = new DynamoDBContext(dynamoDbClient, new DynamoDBContextConfig
+        if (isDevelopmentEnvironment)
         {
-            //TableNamePrefix = "Tomorrowify_"
-        });
+            var creds = new BasicAWSCredentials("fakeMyKeyId", "fakeSecretAccessKey");
+            clientConfig.ServiceURL = configuration?.Dynamo?.ServiceUrl ?? "http://localhost:8080";
+            dynamoDbClient = new AmazonDynamoDBClient(creds, clientConfig);
+        }
+        else
+        {
+            clientConfig.RegionEndpoint = Amazon.RegionEndpoint.EUWest2;
+            dynamoDbClient = new AmazonDynamoDBClient(clientConfig);
+        }
+
+        var dynamoDbContext = new DynamoDBContext(dynamoDbClient, new DynamoDBContextConfig());
 
         await CreateTokensTable(dynamoDbClient);
 

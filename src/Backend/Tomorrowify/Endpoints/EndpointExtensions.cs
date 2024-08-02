@@ -8,7 +8,7 @@ public static class EndpointExtensions {
     public static void RegisterEndpoints(this WebApplication app)
     {
         app.MapPost("/signup/{token}", SignupToken);
-        app.MapPost("/{refreshToken}", UpdatePlaylists);
+        app.MapPost("/updatePlaylists/{refreshToken}", UpdatePlaylists);
     }
 
     private static async Task<IResult> SignupToken(string token, TomorrowifyConfiguration configuration, IRefreshTokenRepository tokenRepository)
@@ -19,7 +19,7 @@ public static class EndpointExtensions {
                     Constants.ClientId,
                     configuration.ClientSecret!,
                     token,
-                    new Uri("http://127.0.0.1:8080")));
+                    new Uri(configuration.WebsiteUri)));
 
         // We can use this token indefinitely to keep our API calls working without re-auth
         var refreshToken = response.RefreshToken;
