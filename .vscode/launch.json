@@ -12,7 +12,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/src/Backend/Tomorrowify/bin/Debug/net6.0/Tomorrowify.dll",
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/src/Backend/Tomorrowify/bin/Debug/net6.0",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
