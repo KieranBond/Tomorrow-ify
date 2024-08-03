@@ -25,7 +25,7 @@ async function RegisterUser(client_secret) {
   try 
   {
     await fetch(
-      `https://localhost:7061/signup/${client_secret}`,
+      `https://372m5i2vzr6ajx3jjod4zvtlwi0uskpo.lambda-url.eu-west-2.on.aws/signup/${client_secret}`,
       {
         method: "POST",
         mode: "cors",
@@ -80,6 +80,6 @@ window.onload = async function () {
     else AddSignUpButton();
   } else {
     console.log("Authorization code not found. Displaying sign up button.");
-    AddSignUpButton();
   }
+  AddSignUpButton();
 };
