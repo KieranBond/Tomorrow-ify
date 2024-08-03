@@ -1,3 +1,4 @@
+using Serilog;
 using SpotifyAPI.Web;
 using Tomorrowify.Configuration;
 using Tomorrowify.Repositories;
@@ -13,6 +14,10 @@ public static class EndpointExtensions {
 
     private static async Task<IResult> SignupToken(string token, TomorrowifyConfiguration configuration, IRefreshTokenRepository tokenRepository)
     {
+        var logger = Log.Logger;
+        
+        logger.Information("Processing sign up request for {token}, using {callbackUri}", token, configuration.WebsiteUri);
+
         var response = await new OAuthClient()
             .RequestToken(
                 new AuthorizationCodeTokenRequest(
@@ -24,16 +29,25 @@ public static class EndpointExtensions {
         // We can use this token indefinitely to keep our API calls working without re-auth
         var refreshToken = response.RefreshToken;
 
+        logger.Information("Received {refreshToken} for request with {token}", refreshToken, token);
+
+
         var spotify = new SpotifyClient(response.AccessToken);
         var user = await spotify.UserProfile.Current();
         
         await tokenRepository.SaveToken(user.Id, refreshToken);
+
+        logger.Information("Saved {refreshToken} for {userId} with {token}", refreshToken, user.Id, token);
 
         return Results.Ok(refreshToken);
     }
 
     private static async Task<IResult> UpdatePlaylists(string refreshToken, TomorrowifyConfiguration configuration)
     {
+        var logger = Log.Logger;
+
+        logger.Information("Received {refreshToken} for update playlists request", refreshToken);
+
         // Use the original refresh token to re-auth and get fresh token
         var response = await new OAuthClient()
             .RequestToken(
@@ -44,6 +58,9 @@ public static class EndpointExtensions {
 
         var spotify = new SpotifyClient(response.AccessToken);
         var user = await spotify.UserProfile.Current();
+        
+        logger.Information("Found {userId} for update playlists request using {refreshToken}", user, refreshToken);
+
         var userPlaylists = await spotify.PaginateAll(await spotify.Playlists.CurrentUsers());
 
         var tomorrowPlaylist =
@@ -78,6 +95,6 @@ public static class EndpointExtensions {
             }
         }
 
-        return Results.Ok($"Hello!");
+        return Results.Ok();
     }
 }

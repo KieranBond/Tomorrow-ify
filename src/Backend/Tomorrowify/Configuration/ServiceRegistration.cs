@@ -9,14 +9,14 @@ namespace Tomorrowify.Configuration;
 
 public static class ServiceRegistration
 {
-    public async static Task<WebApplicationBuilder> RegisterServices(this WebApplicationBuilder builder)
+    public async static Task<TomorrowifyConfiguration> RegisterServices(this WebApplicationBuilder builder)
     {
         var config = builder.Configuration.Get<TomorrowifyConfiguration>();
         builder.Services.AddSingleton(config);
 
         await builder.Services.RegisterDynamoDB(builder.Environment.IsDevelopment(), config);
 
-        return builder;
+        return config;
     }
 
     private static async Task RegisterDynamoDB(this IServiceCollection serviceCollection, bool isDevelopmentEnvironment, TomorrowifyConfiguration configuration)
