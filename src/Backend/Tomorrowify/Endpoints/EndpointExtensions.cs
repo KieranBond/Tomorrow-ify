@@ -9,7 +9,8 @@ public static class EndpointExtensions {
     public static void RegisterEndpoints(this WebApplication app)
     {
         app.MapPost("/signup/{token}", SignupToken);
-        app.MapPost("/updatePlaylists/{refreshToken}", UpdatePlaylists);
+        app.MapPost("/updatePlaylists", UpdatePlaylistsForAllUsers);
+        app.MapPost("/updatePlaylists/{refreshToken}", UpdatePlaylistsForUser);
     }
 
     private static async Task<IResult> SignupToken(string token, TomorrowifyConfiguration configuration, IRefreshTokenRepository tokenRepository)
@@ -42,7 +43,7 @@ public static class EndpointExtensions {
         return Results.Ok(refreshToken);
     }
 
-    private static async Task<IResult> UpdatePlaylists(string refreshToken, TomorrowifyConfiguration configuration)
+    private static async Task<IResult> UpdatePlaylistsForUser(string refreshToken, TomorrowifyConfiguration configuration)
     {
         var logger = Log.Logger;
 
@@ -94,6 +95,22 @@ public static class EndpointExtensions {
                 );
             }
         }
+
+        return Results.Ok();
+    }
+
+    private static async Task<IResult> UpdatePlaylistsForAllUsers(IRefreshTokenRepository tokenRepository, TomorrowifyConfiguration configuration)
+    {
+        var tokenDtos = await tokenRepository.GetAllTokens();
+
+        await Parallel.ForEachAsync(tokenDtos, async (tokenDto, _) =>
+        {
+            try
+            {
+                await UpdatePlaylistsForUser(tokenDto.Token, configuration);
+            }
+            catch { }
+        });
 
         return Results.Ok();
     }
