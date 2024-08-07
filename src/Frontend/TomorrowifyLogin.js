@@ -35,11 +35,13 @@ async function RegisterUser(client_secret) {
       }
     );
     console.log("User signed up successfully");
+    FeedbackText("You're all signed up!");
     return true;
 
   } 
   catch (error) 
   {
+      FeedbackText("Authentication failed. Please try again.");
       console.error("Failed to sign up user");
       console.error(error);
       window.location.href = window.location.pathname;
@@ -54,12 +56,18 @@ function AddSignUpButton() {
   document.getElementById("Signup").appendChild(button);
 }
 
-function AddSignedUpText() {
-  const textElement = document.createElement("p");
-  const textNode = document.createTextNode("You're all signed up!");
-  textElement.appendChild(textNode);
+function FeedbackText(feedbackText) {
 
-  document.getElementById("Signup").appendChild(textElement);
+    const signupElement = document.getElementById("Signup");
+
+    let textElement = signupElement.querySelector("p");
+
+    if (!textElement) {
+        textElement = document.createElement("p");
+        signupElement.appendChild(textElement);
+    }
+
+    textElement.textContent = feedbackText;
 }
 
 // Parse the authorization code from the URL
@@ -71,15 +79,15 @@ window.onload = async function () {
   // Check if the authorization code is present
   const authCode = urlParams.get("code");
 
-  if (authCode) {
-    console.log(
-      "Found authorization code. Registering user to Tomorrow-ify service."
-    );
+    if (authCode) {
+    FeedbackText("Please wait while we authenticate...");
+
+    console.log("Found authorization code. Registering user to Tomorrow-ify service.");
     const success = await RegisterUser(authCode);
-    if (success) AddSignedUpText();
-    else AddSignUpButton();
+      if (success) {
+      }
   } else {
-    console.log("Authorization code not found. Displaying sign up button.");
-  }
-  AddSignUpButton();
+        console.log("Authorization code not found. Displaying sign up button.");
+    }
+    AddSignUpButton();
 };
