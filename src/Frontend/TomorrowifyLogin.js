@@ -84,9 +84,9 @@ window.onload = async function () {
 
     console.log("Found authorization code. Registering user to Tomorrow-ify service.");
     const success = await RegisterUser(authCode);
-      if (success) {
-      }
-  } else {
+        if (success) FeedbackText("You're all signed up!");
+
+    } else {
         console.log("Authorization code not found. Displaying sign up button.");
     }
     AddSignUpButton();
