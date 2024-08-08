@@ -17,7 +17,7 @@ public static class EndpointExtensions {
     {
         var logger = Log.Logger;
         
-        logger.Information("Processing sign up request for {token}, using {callbackUri}", token, configuration.WebsiteUri);
+        logger.Information("Processing sign up request for {token}, using {callbackUri}", token, configuration.CallbackUri);
 
         var response = await new OAuthClient()
             .RequestToken(
@@ -25,7 +25,7 @@ public static class EndpointExtensions {
                     Constants.ClientId,
                     configuration.ClientSecret!,
                     token,
-                    new Uri(configuration.WebsiteUri)));
+                    new Uri(configuration.CallbackUri)));
 
         // We can use this token indefinitely to keep our API calls working without re-auth
         var refreshToken = response.RefreshToken;
