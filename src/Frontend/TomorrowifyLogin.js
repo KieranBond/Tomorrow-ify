@@ -49,16 +49,14 @@ async function RegisterUser(client_secret) {
   }
 }
 
-function AddSignUpButton() {
-  const button = document.createElement("button");
-  button.innerHTML = "Sign up to Tomorrow-ify";
+function ListenToSignUpButton() {
+  const button = document.getElementById("cta");
   button.onclick = GetUserAgreement;
-  document.getElementById("Signup").appendChild(button);
 }
 
 function FeedbackText(feedbackText) {
 
-    const signupElement = document.getElementById("Signup");
+    const signupElement = document.getElementById("cta");
 
     let textElement = signupElement.querySelector("p");
 
@@ -89,5 +87,6 @@ window.onload = async function () {
     } else {
         console.log("Authorization code not found. Displaying sign up button.");
     }
-    AddSignUpButton();
+
+    ListenToSignUpButton();
 };

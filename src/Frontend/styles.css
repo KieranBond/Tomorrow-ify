@@ -1,0 +1,265 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #121212;
+    /* Dark Charcoal Background */
+    color: #E0E0E0;
+    /* Main Text Color */
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* General Styles */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background: linear-gradient(to bottom, #1E1E1E, #121212) no-repeat center center;
+    background-size: cover;
+    padding: 60px 20px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    /* Add shadow for depth */
+    margin-bottom: 40px;
+    /* Add space below header */
+}
+
+.header-content {
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 30px;
+    border-radius: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+
+h1 {
+    font-size: 3em;
+    /* Larger size for better prominence */
+    margin-bottom: 0.5em;
+    color: #FFFFFF;
+    /* Main Header Text Color */
+}
+
+p {
+    font-size: 1.2em;
+    margin-bottom: 1.5em;
+    color: #B3B3B3;
+    line-height: 1.6;
+    /* Slightly increased for readability */
+}
+
+/* Call-to-Action Button */
+.cta-button {
+    display: inline-block;
+    padding: 14px 28px;
+    background-color: #22994b;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.2em;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    margin-top: 20px;
+}
+
+.cta-button:hover {
+    background-color: #14612F;
+    /* Darker Green for Hover */
+}
+
+/* Section Styles */
+section {
+    padding: 60px 20px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    /* Add shadow for depth */
+    background-color: #2C2C2C;
+    /* Medium Dark Gray */
+    color: #E0E0E0;
+    /* Main Text Color */
+    margin-bottom: 40px;
+    /* Consistent space between sections */
+}
+
+/* Specific Section Backgrounds */
+#problem {
+    background-color: #2C2C2C;
+    /* Medium Dark Gray */
+}
+
+#solution {
+    background-color: #1E1E1E;
+    /* Very Dark Gray */
+}
+
+#features {
+    background-color: #2C2C2C;
+    /* Medium Dark Gray */
+}
+
+#testimonials {
+    background-color: #2C2C2C;
+    /* Medium Dark Gray */
+}
+
+#cta {
+    background-color: #1C1C1C;
+    /* Slightly Darker Gray for Better Contrast */
+    color: #E0E0E0;
+    /* High Contrast Text Color */
+    border: 1px solid #333333;
+    /* Adds a border to separate from the main content */
+}
+
+/* Additional Styles */
+
+.feature i {
+    margin: 20px auto 10px;
+    color: #F0F0F0;
+} 
+
+.feature h3 {
+    font-size: 1.6em;
+    margin-bottom: 0.5em;
+    color: #FFFFFF;
+    /* Feature Header Text Color */
+}
+
+.feature p {
+    color: #B3B3B3;
+    /* Feature Description Text Color */
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    flex-direction: column-reverse;
+}
+
+.author img {
+    width: 80px;
+    /* Adjust size as needed */
+    height: 80px;
+    /* Ensure height matches width for a perfect circle */
+    border-radius: 50%;
+    /* Makes the image round */
+    margin-top: 5px;
+    /* Space between the image and the text */
+    border: 2px solid #FF4081;
+    /* Optional: border color to match theme */
+}
+
+.author p {
+    font-size: 1.2em;
+    /* Slightly larger font size */
+    font-weight: bold;
+    /* Bold text for emphasis */
+    color: #E0E0E0;
+    /* High contrast color */
+    margin: 0;
+    /* Remove default margin */
+}
+
+.testimonial {
+    padding: 20px;
+    /* Increase padding for emphasis */
+    background-color: #2C2C2C;
+    /* Medium Dark Gray */
+    border-radius: 8px;
+    /* Rounded corners */
+    margin-bottom: 20px;
+    /* Space between testimonials */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    /* Shadow for depth */
+}
+
+.testimonial blockquote {
+    position: relative;
+    padding: 20px;
+    /* Space inside the blockquote */
+    background-color: #1E1E1E;
+    /* Slightly lighter background */
+    border-left: 4px solid #FF4081;
+    /* Colored border for emphasis */
+    margin: 0 auto;
+    max-width: 800px;
+    /* Width limitation for readability */
+    font-size: 1.5em;
+    /* Larger font size */
+    font-style: italic;
+    /* Italicize the quote */
+    color: #B3B3B3;
+    /* Light color for the quote */
+    border-radius: 8px;
+    /* Rounded corners */
+}
+
+.testimonial blockquote:before {
+    /* content: ""; */
+    font-size: 3em;
+    /* Large quotation mark */
+    color: #FF4081;
+    /* Color to match the border */
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.testimonial .author {
+    font-size: 1.2em;
+    /* Slightly larger than regular text */
+    font-weight: bold;
+    /* Bold text for emphasis */
+    margin-top: 10px;
+    /* Space above the author’s name */
+    color: #E0E0E0;
+    /* High contrast color */
+}
+
+.testimonial .position {
+    margin: 20px auto;
+    font-size: 1em;
+    /* Regular font size */
+    color: #B3B3B3;
+    /* Secondary color for less emphasis */
+}
+
+footer {
+    background-color: #1C1C1C;
+    /* Slightly Darker Gray for Better Contrast */
+    color: #E0E0E0;
+    /* Footer Text Color */
+    padding: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.5);
+    /* Deeper shadow for more separation */
+    border-top: 2px solid #333333;
+    /* Adds a border to separate from the main content */
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Error and Success Messages */
+.error-message {
+    color: #FF6B6B;
+    /* Bright Red for Error Messages */
+}
+
+.success-message {
+    color: #4CAF50;
+    /* Green for Success Messages */
+}
