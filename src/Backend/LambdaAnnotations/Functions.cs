@@ -1,6 +1,12 @@
 using Amazon.Lambda.Core;
 using Amazon.Lambda.Annotations;
 using Amazon.Lambda.Annotations.APIGateway;
+using Tomorrowify.Repositories;
+using Serilog;
+using Microsoft.AspNetCore.Http;
+using Tomorrowify.Configuration;
+using SpotifyAPI.Web;
+using Tomorrowify;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
@@ -9,104 +15,84 @@ namespace LambdaAnnotations;
 /// <summary>
 /// A collection of sample Lambda functions that provide a REST api for doing simple math calculations. 
 /// </summary>
-public class Functions
+public class Functions(IRefreshTokenRepository tokenRepository, TomorrowifyConfiguration configuration)
 {
-    private ICalculatorService _calculatorService;
+    private readonly ILogger _logger = Log.ForContext<Functions>();
 
-    /// <summary>
-    /// Default constructor.
-    /// </summary>
-    /// <remarks>
-    /// The <see cref="ICalculatorService"/> implementation that we
-    /// instantiated in <see cref="Startup"/> will be injected here.
-    /// 
-    /// As an alternative, a dependency could be injected into each 
-    /// Lambda function handler via the [FromServices] attribute.
-    /// </remarks>
-    public Functions(ICalculatorService calculatorService)
+    private readonly IRefreshTokenRepository _tokenRepository = tokenRepository;
+    private readonly TomorrowifyConfiguration _configuration = configuration;
+
+    [LambdaFunction()]
+    [HttpApi(LambdaHttpMethod.Post, "/updatePlaylists")]
+    public async Task<IResult> UpdatePlaylistsForAllUsers()
     {
-        _calculatorService = calculatorService;
+        var tokenDtos = await _tokenRepository.GetAllTokens();
+
+        await Parallel.ForEachAsync(tokenDtos, async (tokenDto, _) =>
+        {
+            try
+            {
+                await UpdatePlaylistsForUser(tokenDto.Token, _configuration);
+            }
+            catch { }
+        });
+
+        return Results.Ok();
     }
 
-    /// <summary>
-    /// Root route that provides information about the other requests that can be made.
-    /// </summary>
-    /// <returns>API descriptions.</returns>
-    [LambdaFunction()]
-    [HttpApi(LambdaHttpMethod.Get, "/")]
-    public string Default()
+    private static async Task<IResult> UpdatePlaylistsForUser(string refreshToken, TomorrowifyConfiguration configuration)
     {
-        var docs = @"Lambda Calculator Home:
-You can make the following requests to invoke other Lambda functions perform calculator operations:
-/add/{x}/{y}
-/subtract/{x}/{y}
-/multiply/{x}/{y}
-/divide/{x}/{y}
-";
-        return docs;
-    }
+        var logger = Log.Logger;
 
-    /// <summary>
-    /// Perform x + y
-    /// </summary>
-    /// <param name="x">Left hand operand of the arithmetic operation.</param>
-    /// <param name="y">Right hand operand of the arithmetic operation.</param>
-    /// <returns>Sum of x and y.</returns>
-    [LambdaFunction()]
-    [HttpApi(LambdaHttpMethod.Get, "/add/{x}/{y}")]
-    public int Add(int x, int y, ILambdaContext context)
-    {
-        var sum = _calculatorService.Add(x, y);
+        logger.Information("Received {refreshToken} for update playlists request", refreshToken);
 
-        context.Logger.LogInformation($"{x} plus {y} is {sum}");
-        return sum;
-    }
+        // Use the original refresh token to re-auth and get fresh token
+        var response = await new OAuthClient()
+            .RequestToken(
+                new AuthorizationCodeRefreshRequest(
+                    Constants.ClientId,
+                    configuration.ClientSecret!,
+                    refreshToken));
 
-    /// <summary>
-    /// Perform x - y.
-    /// </summary>
-    /// <param name="x">Left hand operand of the arithmetic operation.</param>
-    /// <param name="y">Right hand operand of the arithmetic operation.</param>
-    /// <returns>x subtract y</returns>
-    [LambdaFunction()]
-    [HttpApi(LambdaHttpMethod.Get, "/subtract/{x}/{y}")]
-    public int Subtract(int x, int y, ILambdaContext context)
-    {
-        var difference = _calculatorService.Subtract(x, y);
+        var spotify = new SpotifyClient(response.AccessToken);
+        var user = await spotify.UserProfile.Current();
 
-        context.Logger.LogInformation($"{x} subtract {y} is {difference}");
-        return difference;
-    }
+        logger.Information("Found {userId} for update playlists request using {refreshToken}", user, refreshToken);
 
-    /// <summary>
-    /// Perform x * y.
-    /// </summary>
-    /// <param name="x">Left hand operand of the arithmetic operation.</param>
-    /// <param name="y">Right hand operand of the arithmetic operation.</param>
-    /// <returns>x multiply y</returns>
-    [LambdaFunction()]
-    [HttpApi(LambdaHttpMethod.Get, "/multiply/{x}/{y}")]
-    public int Multiply(int x, int y, ILambdaContext context)
-    {
-        var product = _calculatorService.Multiply(x, y);
+        var userPlaylists = await spotify.PaginateAll(await spotify.Playlists.CurrentUsers());
 
-        context.Logger.LogInformation($"{x} multiplied by {y} is {product}");
-        return product;
-    }
+        var tomorrowPlaylist =
+            userPlaylists.FirstOrDefault(p => p.Name == "Tomorrow") ??
+            await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Tomorrow"));
 
-    /// <summary>
-    /// Perform x / y.
-    /// </summary>
-    /// <param name="x">Left hand operand of the arithmetic operation.</param>
-    /// <param name="y">Right hand operand of the arithmetic operation.</param>
-    /// <returns>x divide y</returns>
-    [LambdaFunction()]
-    [HttpApi(LambdaHttpMethod.Get, "/divide/{x}/{y}")]
-    public int Divide(int x, int y, ILambdaContext context)
-    {
-        var quotient = _calculatorService.Divide(x, y);
+        var todayPlaylist =
+            userPlaylists.FirstOrDefault(p => p.Name == "Today") ??
+            await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Today"));
 
-        context.Logger.LogInformation($"{x} divided by {y} is {quotient}");
-        return quotient;
+        var tomorrowTracks =
+            (await spotify.PaginateAll(await spotify.Playlists.GetItems(tomorrowPlaylist.Id!)))
+            .Select(t => t.Track as FullTrack)
+            .Where(t => t?.Id != null);
+
+        if (!tomorrowTracks.Any())
+            return Results.Ok();
+
+        await spotify.Playlists.ReplaceItems(todayPlaylist.Id!,
+            new PlaylistReplaceItemsRequest(tomorrowTracks.Take(100).Select(t => t!.Uri).ToList())
+        );
+
+        if (tomorrowTracks.Count() > 100)
+        {
+            var remainingTracks = tomorrowTracks.Skip(100);
+            var tracksToAdd = remainingTracks.Chunk(100);
+            foreach (var chunk in tracksToAdd)
+            {
+                await spotify.Playlists.AddItems(tomorrowPlaylist.Id!,
+                    new PlaylistAddItemsRequest(chunk.Select(t => t!.Uri).ToList())
+                );
+            }
+        }
+
+        return Results.Ok();
     }
 }
