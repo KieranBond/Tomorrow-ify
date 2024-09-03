@@ -3,13 +3,10 @@
   "Transform": "AWS::Serverless-2016-10-31",
   "Description": "An AWS Serverless Application. This template is partially managed by Amazon.Lambda.Annotations (v1.3.0.0).",
   "Resources": {
-    "LambdaAnnotationsFunctionsUpdatePlaylistsForAllUsersGenerated": {
+    "LambdaAnnotationsLambdaFunctionsUpdatePlaylistsForAllUsersGenerated": {
       "Type": "AWS::Serverless::Function",
       "Metadata": {
-        "Tool": "Amazon.Lambda.Annotations",
-        "SyncedEvents": [
-          "RootPost"
-        ]
+        "Tool": "Amazon.Lambda.Annotations"
       },
       "Properties": {
         "Runtime": "dotnet8",
@@ -20,25 +17,10 @@
           "AWSLambdaBasicExecutionRole"
         ],
         "PackageType": "Zip",
-        "Handler": "LambdaAnnotations::LambdaAnnotations.Functions_UpdatePlaylistsForAllUsers_Generated::UpdatePlaylistsForAllUsers",
-        "Events": {
-          "RootPost": {
-            "Type": "HttpApi",
-            "Properties": {
-              "Path": "/updatePlaylists",
-              "Method": "POST"
-            }
-          }
-        }
+        "Handler": "LambdaAnnotations::LambdaAnnotations.LambdaFunctions_UpdatePlaylistsForAllUsers_Generated::UpdatePlaylistsForAllUsers"
       }
     }
   },
   "Outputs": {
-    "ApiURL": {
-      "Description": "API endpoint URL for Prod environment",
-      "Value": {
-        "Fn::Sub": "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/"
-      }
-    }
   }
 }

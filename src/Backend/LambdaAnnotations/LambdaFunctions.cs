@@ -7,24 +7,21 @@ using Microsoft.AspNetCore.Http;
 using Tomorrowify.Configuration;
 using SpotifyAPI.Web;
 using Tomorrowify;
+using Amazon.Lambda.CloudWatchEvents.ScheduledEvents;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
 namespace LambdaAnnotations;
 
-/// <summary>
-/// A collection of sample Lambda functions that provide a REST api for doing simple math calculations. 
-/// </summary>
-public class Functions(IRefreshTokenRepository tokenRepository, TomorrowifyConfiguration configuration)
+public class LambdaFunctions(IRefreshTokenRepository tokenRepository, TomorrowifyConfiguration configuration)
 {
-    private readonly ILogger _logger = Log.ForContext<Functions>();
+    private readonly ILogger _logger = Log.ForContext<LambdaFunctions>();
 
     private readonly IRefreshTokenRepository _tokenRepository = tokenRepository;
     private readonly TomorrowifyConfiguration _configuration = configuration;
 
     [LambdaFunction()]
-    [HttpApi(LambdaHttpMethod.Post, "/updatePlaylists")]
-    public async Task<IResult> UpdatePlaylistsForAllUsers()
+    public async Task<IResult> UpdatePlaylistsForAllUsers(ScheduledEvent evt)
     {
         var tokenDtos = await _tokenRepository.GetAllTokens();
 
@@ -34,7 +31,10 @@ public class Functions(IRefreshTokenRepository tokenRepository, TomorrowifyConfi
             {
                 await UpdatePlaylistsForUser(tokenDto.Token, _configuration);
             }
-            catch { }
+            catch(Exception e)
+            {
+                _logger.Error(e, "Failure to update playlist for user");
+            }
         });
 
         return Results.Ok();
