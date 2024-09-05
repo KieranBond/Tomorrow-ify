@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    font-family: 'Roboto', Arial, sans-serif;
+    font-family: "Josefin Sans", sans-serif !important;
     background-color: #121212;
     /* Dark Charcoal Background */
     color: #E0E0E0;
@@ -126,7 +126,7 @@ section {
 .feature i {
     margin: 20px auto 10px;
     color: #F0F0F0;
-} 
+}
 
 .feature h3 {
     font-size: 1.6em;
@@ -262,4 +262,124 @@ footer p {
 .success-message {
     color: #4CAF50;
     /* Green for Success Messages */
+}
+
+
+
+
+/*Hero Section*/
+.hero-section {
+    background: url('images/header1.png') no-repeat center center;
+    background-color: black;
+    background-size: cover;
+    min-height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-top: 5px solid #5AACF6;
+}
+
+
+
+.hero-section h1 {
+    font-weight: bold;
+    color: #5AACF6;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 120px;
+}
+
+.hero-section p {
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+.btn-start {
+    background-color: #F5615B !important;
+    border: none;
+    border-radius: 120px !important;
+    color: black;
+    font-weight: 400;
+    font-size: 25px;
+}
+
+.title {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 0;
+}
+
+.svg-icon {
+    position: absolute;
+    top: -20px;
+    right: -60px;
+    width: 50px;
+    height: 50px;
+}
+
+/*Why Section */
+.why-section {
+    background-color: #222;
+    background-image: url('images/wave-blue.png');
+    color: white;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.why-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+}
+
+.problem,
+.solution {
+    background-color: #0B0B0B;
+    padding: 30px;
+    border-radius: 0px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.problem h3,
+.solution h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.problem p,
+.solution p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.arrow-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.arrow {
+    font-size: 4rem;
+    color: #5a8dee;
+}
+
+.container-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+@media (max-width: 768px) {
+    .container-boxes {
+        flex-direction: column;
+    }
+
+    .arrow {
+        margin: 20px 0;
+    }
 }
