@@ -125,8 +125,16 @@ section {
 
 /* Additional Styles */
 
+.features-grid {
+    display: flex;
+}
+
+.feature {
+    width: 33vw;
+}
+
 .feature i {
-    margin: 20px auto 10px;
+    margin: 20px auto 20px;
     color: #0B0B0B;
 }
 
@@ -139,6 +147,7 @@ section {
 
 .feature p {
     color: #0B0B0B;
+    font-size: 1em;
     /* Feature Description Text Color */
 }
 
