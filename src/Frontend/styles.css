@@ -87,8 +87,6 @@ section {
     /* Medium Dark Gray */
     color: #E0E0E0;
     /* Main Text Color */
-    margin-bottom: 40px;
-    /* Consistent space between sections */
 }
 
 /* Specific Section Backgrounds */
@@ -103,8 +101,12 @@ section {
 }
 
 #features {
-    background-color: #2C2C2C;
-    /* Medium Dark Gray */
+    background-image: linear-gradient(#5AACF6, #B2CBE1);
+}
+
+#features h1 {
+    color: #0B0B0B;
+    /* Feature Header Text Color */
 }
 
 #testimonials {
@@ -125,18 +127,18 @@ section {
 
 .feature i {
     margin: 20px auto 10px;
-    color: #F0F0F0;
+    color: #0B0B0B;
 }
 
 .feature h3 {
     font-size: 1.6em;
     margin-bottom: 0.5em;
-    color: #FFFFFF;
+    color: #0B0B0B;
     /* Feature Header Text Color */
 }
 
 .feature p {
-    color: #B3B3B3;
+    color: #0B0B0B;
     /* Feature Description Text Color */
 }
 
