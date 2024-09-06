@@ -36,8 +36,12 @@ public static class EndpointExtensions {
         var user = await spotify.UserProfile.Current();
         
         await tokenRepository.SaveToken(user.Id, refreshToken);
-
         logger.Information("Saved {refreshToken} for {userId} with {token}", refreshToken, user.Id, token);
+
+        await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Today"));
+        await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Tomorrow"));
+        logger.Information("Created Today and Tomorrow playlist for {userId}", user.Id);
+
 
         return Results.Ok(refreshToken);
     }

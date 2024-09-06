@@ -8,6 +8,7 @@ using Tomorrowify.Configuration;
 using SpotifyAPI.Web;
 using Tomorrowify;
 using Amazon.Lambda.CloudWatchEvents.ScheduledEvents;
+using static SpotifyAPI.Web.PlaylistRemoveItemsRequest;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
@@ -15,14 +16,15 @@ namespace LambdaAnnotations;
 
 public class LambdaFunctions(IRefreshTokenRepository tokenRepository, TomorrowifyConfiguration configuration)
 {
-    private readonly ILogger _logger = Log.ForContext<LambdaFunctions>();
+    private ILogger _logger = Log.ForContext<LambdaFunctions>();
 
     private readonly IRefreshTokenRepository _tokenRepository = tokenRepository;
     private readonly TomorrowifyConfiguration _configuration = configuration;
 
     [LambdaFunction()]
-    public async Task<IResult> UpdatePlaylistsForAllUsers(ScheduledEvent evt)
+    public async Task<IResult> UpdatePlaylistsForAllUsers(ScheduledEvent _, ILambdaContext context)
     {
+        _logger = _logger.ForContext("LambdaContext", context, true);
         var tokenDtos = await _tokenRepository.GetAllTokens();
 
         await Parallel.ForEachAsync(tokenDtos, async (tokenDto, _) =>
@@ -30,21 +32,20 @@ public class LambdaFunctions(IRefreshTokenRepository tokenRepository, Tomorrowif
             try
             {
                 await UpdatePlaylistsForUser(tokenDto.Token, _configuration);
+                _logger.Information("Completed updating playlists for {user}", tokenDto.Key);
             }
             catch(Exception e)
             {
-                _logger.Error(e, "Failure to update playlist for user");
+                _logger.Error(e, "Failure to update playlist for {user}", tokenDto.Key);
             }
         });
 
         return Results.Ok();
     }
 
-    private static async Task<IResult> UpdatePlaylistsForUser(string refreshToken, TomorrowifyConfiguration configuration)
+    private async Task<IResult> UpdatePlaylistsForUser(string refreshToken, TomorrowifyConfiguration configuration)
     {
-        var logger = Log.Logger;
-
-        logger.Information("Received {refreshToken} for update playlists request", refreshToken);
+        _logger.Information("Received {refreshToken} for update playlists request", refreshToken);
 
         // Use the original refresh token to re-auth and get fresh token
         var response = await new OAuthClient()
@@ -57,7 +58,7 @@ public class LambdaFunctions(IRefreshTokenRepository tokenRepository, Tomorrowif
         var spotify = new SpotifyClient(response.AccessToken);
         var user = await spotify.UserProfile.Current();
 
-        logger.Information("Found {userId} for update playlists request using {refreshToken}", user, refreshToken);
+        _logger.Information("Found {@user} for update playlists request using {refreshToken}", user, refreshToken);
 
         var userPlaylists = await spotify.PaginateAll(await spotify.Playlists.CurrentUsers());
 
@@ -87,11 +88,21 @@ public class LambdaFunctions(IRefreshTokenRepository tokenRepository, Tomorrowif
             var tracksToAdd = remainingTracks.Chunk(100);
             foreach (var chunk in tracksToAdd)
             {
-                await spotify.Playlists.AddItems(tomorrowPlaylist.Id!,
+                await spotify.Playlists.AddItems(todayPlaylist.Id!,
                     new PlaylistAddItemsRequest(chunk.Select(t => t!.Uri).ToList())
+                );
+
+                await spotify.Playlists.RemoveItems(tomorrowPlaylist.Id!,
+                    new PlaylistRemoveItemsRequest()
+                    {
+                        Tracks = chunk.Select(t => new Item() { Uri = t!.Uri }).ToList(),
+                    }
                 );
             }
         }
+
+
+        _logger.Information("Completed swap of playlist for {@user}", user);
 
         return Results.Ok();
     }
