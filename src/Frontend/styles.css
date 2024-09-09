@@ -1,3 +1,8 @@
+:root {
+    --tomorrow-blue-colour: #5AACF6;
+    --tomorrow-coral-colour: #F5615B;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -51,8 +56,7 @@ h1 {
 
 p {
     font-size: 1.2em;
-    margin-bottom: 1.5em;
-    color: #B3B3B3;
+    color: #FFFFFF;
     line-height: 1.6;
     /* Slightly increased for readability */
 }
@@ -101,7 +105,7 @@ section {
 }
 
 #features {
-    background-image: linear-gradient(#5AACF6, #B2CBE1);
+    background-image: linear-gradient(var(--tomorrow-blue-colour), #B2CBE1);
 }
 
 #features h1 {
@@ -110,8 +114,10 @@ section {
 }
 
 #testimonials {
-    background-color: #2C2C2C;
-    /* Medium Dark Gray */
+    background: url('images/testimonial.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #cta {
@@ -151,101 +157,42 @@ section {
     /* Feature Description Text Color */
 }
 
-.author {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    flex-direction: column-reverse;
-}
-
-.author img {
-    width: 80px;
-    /* Adjust size as needed */
-    height: 80px;
-    /* Ensure height matches width for a perfect circle */
-    border-radius: 50%;
-    /* Makes the image round */
-    margin-top: 5px;
-    /* Space between the image and the text */
-    border: 2px solid #FF4081;
-    /* Optional: border color to match theme */
-}
-
-.author p {
-    font-size: 1.2em;
-    /* Slightly larger font size */
+#testimonials h2 {
     font-weight: bold;
-    /* Bold text for emphasis */
-    color: #E0E0E0;
-    /* High contrast color */
-    margin: 0;
-    /* Remove default margin */
 }
 
 .testimonial {
     padding: 20px;
-    /* Increase padding for emphasis */
-    background-color: #2C2C2C;
-    /* Medium Dark Gray */
-    border-radius: 8px;
-    /* Rounded corners */
-    margin-bottom: 20px;
-    /* Space between testimonials */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    /* Shadow for depth */
 }
 
 .testimonial blockquote {
     position: relative;
     padding: 20px;
-    /* Space inside the blockquote */
-    background-color: #1E1E1E;
-    /* Slightly lighter background */
-    border-left: 4px solid #FF4081;
-    /* Colored border for emphasis */
     margin: 0 auto;
-    max-width: 800px;
-    /* Width limitation for readability */
-    font-size: 1.5em;
-    /* Larger font size */
-    font-style: italic;
-    /* Italicize the quote */
-    color: #B3B3B3;
-    /* Light color for the quote */
-    border-radius: 8px;
-    /* Rounded corners */
-}
-
-.testimonial blockquote:before {
-    /* content: ""; */
-    font-size: 3em;
-    /* Large quotation mark */
-    color: #FF4081;
-    /* Color to match the border */
-    position: absolute;
-    top: 10px;
-    left: 10px;
-}
-
-.testimonial .author {
-    font-size: 1.2em;
-    /* Slightly larger than regular text */
     font-weight: bold;
-    /* Bold text for emphasis */
-    margin-top: 10px;
-    /* Space above the author’s name */
-    color: #E0E0E0;
-    /* High contrast color */
+    font-size: 3em;
+    color: var(--tomorrow-blue-colour);
 }
 
-.testimonial .position {
-    margin: 20px auto;
-    font-size: 1em;
-    /* Regular font size */
-    color: #B3B3B3;
-    /* Secondary color for less emphasis */
+.author-photo img {
+    width: 10%;
+    height: 10%;
+    /* Ensure height matches width for a perfect circle */
+    border-radius: 50%;
+    /* Makes the image round */
+    margin-top: 5px;
 }
+
+.testimonial .author-descriptor {
+    color: #FFFFFF;
+}
+
+.testimonial .author-descriptor p {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
 
 footer {
     background-color: #1C1C1C;
@@ -279,7 +226,7 @@ footer p {
 
 .header {
     padding: 5px;
-    background-color: #5AACF6;
+    background-color: var(--tomorrow-blue-colour);
     position: sticky;
     top: 0;
 }
@@ -300,7 +247,7 @@ footer p {
 
 .hero-section h1 {
     font-weight: bold;
-    color: #5AACF6;
+    color: var(--tomorrow-blue-colour);
     font-style: normal;
     font-weight: 700;
     font-size: 120px;
@@ -312,7 +259,7 @@ footer p {
 }
 
 .btn-start {
-    background-color: #F5615B !important;
+    background-color: var(--tomorrow-coral-colour) !important;
     border: none;
     border-radius: 120px !important;
     color: black;
