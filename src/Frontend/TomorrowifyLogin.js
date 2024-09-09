@@ -58,13 +58,12 @@ function HandleRegistrationError(error)
 }
 
 function ListenToSignUpButton() {
-  const button = document.getElementById("cta");
+  const button = document.getElementsByClassName("cta-button")[0];
   button.onclick = GetUserAgreement;
 }
 
 function FeedbackText(feedbackText) {
-  const signupElement = document.getElementById("cta");
-
+  const signupElement = document.getElementsByClassName("cta-button")[0];
   let textElement = signupElement.querySelector("p");
 
   if (!textElement) {
