@@ -277,6 +277,12 @@ footer p {
 
 
 
+.header {
+    padding: 5px;
+    background-color: #5AACF6;
+    position: sticky;
+    top: 0;
+}
 
 /*Hero Section*/
 .hero-section {
@@ -288,7 +294,6 @@ footer p {
     align-items: center;
     justify-content: center;
     text-align: center;
-    border-top: 5px solid #5AACF6;
 }
 
 
