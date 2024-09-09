@@ -5,34 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tomorrowify</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+
     <script src="TomorrowifyLogin.js"></script>
 </head>
 
 <body>
-    <!-- Header Section -->
-    <header>
-        <div class="header-content">
-            <h1>Tomorrowify</h1>
-            <p>Your personal playlist manager for Spotify. Keep your listening sessions fresh and organized.</p>
-            <a href="#cta" class="cta-button">Start Organizing</a>
+    <div class="header"></div>
+
+    <div class="hero-section">
+        <div>
+            <h1 class="title">TOMORROWIFY</h1>
+            <p>Your personal playlist manager for Spotify.<br>Keep your listening session fresh and organised.</p>
+            <a href="#cta" class="btn btn-lg btn-start px-4 py-3 fw-bold">START ORGANISING</a>
         </div>
-    </header>
+    </div>
 
     <!-- Problem Section -->
-    <section id="problem" class="accent-background">
-        <h2>Problem</h2>
-        <p>Ever find yourself wanting to listen to a song your friend sent you, but it's not the right moment? Or are
-            you stuck with a playlist that doesn’t match your vibe? Tomorrowify has the solution!</p>
-    </section>
+    <section class="why-section">
+        <h2>WHY TOMORROWIFY?</h2>
+        <div class="container container-boxes">
+            <div class="col-md-4 problem">
+                <h3>THE PROBLEM</h3>
+                <p>Ever find yourself wanting to listen to a song your friend sent you, but it's not the right moment?
+                    Or are you stuck with a playlist that doesn’t match your vibe? Tomorrowify has the solution!</p>
+            </div>
+            <div class="arrow-container">
+                <div class="arrow">➔</div>
+              </div>
+            <div class="col-md-4 solution">
+                <h3>THE SOLUTION</h3>
+                <p>
+                    Tomorrowify creates two playlists for you: Today and Tomorrow. It automatically updates your Today
+                    playlist with songs from Tomorrow every night, so you’re always ready to listen to what you’ve saved
+                    for later.</p>
+            </div>
+        </div>
+    </section> 
 
-    <!-- Solution Section -->
-    <section id="solution">
-        <h2>Solution</h2>
-        <p>Tomorrowify creates two playlists for you: Today and Tomorrow. It automatically updates your Today playlist
-            with songs from Tomorrow every night, so you’re always ready to listen to what you’ve saved for later.</p>
-    </section>
+
+
+   
 
     <!-- Features Section -->
     <section id="features">
@@ -40,37 +61,36 @@
         <div class="features-grid">
             <div class="feature">
                 <i class="fa fa-sync-alt fa-2xl"></i>
-                <h3>Automatic Updates</h3>
+                <h3>AUTOMATIC UPDATES</h3>
                 <p>Seamlessly keep your playlists organized without any manual effort.</p>
             </div>
             <div class="feature">
                 <i class="fa-solid fa-plug fa-2xl"></i>
-                <h3>Easy Setup</h3>
+                <h3>EASY SETUP</h3>
                 <p>Quickly integrate with your Spotify account and start organizing.</p>
             </div>
-            <!--  We don't have this yet (:
             <div class="feature">
-                <i class="fa fa-cogs"></i>
-                <h3>Customizable</h3>
-                <p>Adjust settings to fit your listening habits and preferences.</p>
+                <i class="fa-solid fa-clock fa-2xl"></i>
+                <h3>TIME SAVER</h3>
+                <p>Spend less time searching, more time vibing to your music.</p>
             </div>
-             -->
         </div>
     </section>
 
     <!-- Testimonials Section -->
     <section id="testimonials">
-        <h2>What Our Users Say</h2>
+        <h2>WHAT OUR USERS SAY</h2>
         <div class="testimonial">
-            <blockquote>
-                “This is the shit.”
-            </blockquote>
-            <div class="author">
-                <img alt="Author Photo" src="https://substackcdn.com/image/fetch/w_128,h_128,c_fill,f_webp,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffab0dd01-413c-42ac-bb60-53f8d68f02a1_2370x2672.jpeg"/>
-                <p>Ashley Cheema</p>
+            <div class="author-photo">
+                <img alt="Author Photo"
+                src="images/cheema.png" />
             </div>
-            <div class="position">
-                Music Enthusiast and Blogger
+            <blockquote>
+                “This is the shit!”
+            </blockquote>
+            <div class="author-descriptor">
+                <p>ASHLEY CHEEMA</p>
+                <p2>Music Enthusiast and Blogger</p2>
             </div>
         </div>
         <!-- Let's get some actual users first?
@@ -83,7 +103,7 @@
 
     <!-- Call to Action Section -->
     <section id="cta" class="accent-background">
-        <h2>Ready to Get Started?</h2>
+        <h2>READY TO GET STARTED?</h2>
         <p>Organize your music effortlessly and enhance your listening experience. Sign up for Tomorrowify today!</p>
         <a href="#" class="cta-button">Get Started</a>
     </section>
@@ -92,6 +112,10 @@
     <footer>
         <p>&copy; 2024 Tomorrowify. All rights reserved.</p>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

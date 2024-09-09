@@ -1,9 +1,14 @@
+:root {
+    --tomorrow-blue-colour: #5AACF6;
+    --tomorrow-coral-colour: #F5615B;
+}
+
 html {
     scroll-behavior: smooth;
 }
 
 body {
-    font-family: 'Roboto', Arial, sans-serif;
+    font-family: "Josefin Sans", sans-serif !important;
     background-color: #121212;
     /* Dark Charcoal Background */
     color: #E0E0E0;
@@ -51,8 +56,7 @@ h1 {
 
 p {
     font-size: 1.2em;
-    margin-bottom: 1.5em;
-    color: #B3B3B3;
+    color: #FFFFFF;
     line-height: 1.6;
     /* Slightly increased for readability */
 }
@@ -87,8 +91,6 @@ section {
     /* Medium Dark Gray */
     color: #E0E0E0;
     /* Main Text Color */
-    margin-bottom: 40px;
-    /* Consistent space between sections */
 }
 
 /* Specific Section Backgrounds */
@@ -103,138 +105,106 @@ section {
 }
 
 #features {
-    background-color: #2C2C2C;
-    /* Medium Dark Gray */
+    background-image: linear-gradient(var(--tomorrow-blue-colour), #B2CBE1);
+}
+
+#features h1 {
+    color: #0B0B0B;
+    /* Feature Header Text Color */
 }
 
 #testimonials {
-    background-color: #2C2C2C;
-    /* Medium Dark Gray */
+    background: url('images/testimonial.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #cta {
-    background-color: #1C1C1C;
-    /* Slightly Darker Gray for Better Contrast */
-    color: #E0E0E0;
-    /* High Contrast Text Color */
-    border: 1px solid #333333;
-    /* Adds a border to separate from the main content */
+    background-image: url('images/wave-blue.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    /* background-size: 100% 100%; */
+    background-size: cover;
+}
+
+#cta h2 {
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+#cta p {
+    font-size: 1.1em;
+    padding-top: 1%;
+    color: #FFFFFF;
+    padding-left: 35%;
+    padding-right: 35%;
 }
 
 /* Additional Styles */
 
+.features-grid {
+    display: flex;
+}
+
+.feature {
+    width: 33vw;
+}
+
 .feature i {
-    margin: 20px auto 10px;
-    color: #F0F0F0;
-} 
+    margin: 20px auto 30px;
+    color: #0B0B0B;
+}
 
 .feature h3 {
     font-size: 1.6em;
     margin-bottom: 0.5em;
-    color: #FFFFFF;
+    color: #0B0B0B;
     /* Feature Header Text Color */
 }
 
 .feature p {
-    color: #B3B3B3;
+    color: #0B0B0B;
+    font-size: 1em;
     /* Feature Description Text Color */
 }
 
-.author {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    flex-direction: column-reverse;
-}
-
-.author img {
-    width: 80px;
-    /* Adjust size as needed */
-    height: 80px;
-    /* Ensure height matches width for a perfect circle */
-    border-radius: 50%;
-    /* Makes the image round */
-    margin-top: 5px;
-    /* Space between the image and the text */
-    border: 2px solid #FF4081;
-    /* Optional: border color to match theme */
-}
-
-.author p {
-    font-size: 1.2em;
-    /* Slightly larger font size */
+#testimonials h2 {
     font-weight: bold;
-    /* Bold text for emphasis */
-    color: #E0E0E0;
-    /* High contrast color */
-    margin: 0;
-    /* Remove default margin */
 }
 
 .testimonial {
     padding: 20px;
-    /* Increase padding for emphasis */
-    background-color: #2C2C2C;
-    /* Medium Dark Gray */
-    border-radius: 8px;
-    /* Rounded corners */
-    margin-bottom: 20px;
-    /* Space between testimonials */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    /* Shadow for depth */
 }
 
 .testimonial blockquote {
     position: relative;
     padding: 20px;
-    /* Space inside the blockquote */
-    background-color: #1E1E1E;
-    /* Slightly lighter background */
-    border-left: 4px solid #FF4081;
-    /* Colored border for emphasis */
     margin: 0 auto;
-    max-width: 800px;
-    /* Width limitation for readability */
-    font-size: 1.5em;
-    /* Larger font size */
-    font-style: italic;
-    /* Italicize the quote */
-    color: #B3B3B3;
-    /* Light color for the quote */
-    border-radius: 8px;
-    /* Rounded corners */
-}
-
-.testimonial blockquote:before {
-    /* content: ""; */
-    font-size: 3em;
-    /* Large quotation mark */
-    color: #FF4081;
-    /* Color to match the border */
-    position: absolute;
-    top: 10px;
-    left: 10px;
-}
-
-.testimonial .author {
-    font-size: 1.2em;
-    /* Slightly larger than regular text */
     font-weight: bold;
-    /* Bold text for emphasis */
-    margin-top: 10px;
-    /* Space above the author’s name */
-    color: #E0E0E0;
-    /* High contrast color */
+    font-size: 3em;
+    color: var(--tomorrow-blue-colour);
 }
 
-.testimonial .position {
-    margin: 20px auto;
-    font-size: 1em;
-    /* Regular font size */
-    color: #B3B3B3;
-    /* Secondary color for less emphasis */
+.author-photo img {
+    width: 10%;
+    height: 10%;
+    /* Ensure height matches width for a perfect circle */
+    border-radius: 50%;
+    /* Makes the image round */
+    margin-top: 5px;
 }
+
+.testimonial .author-descriptor {
+    color: #FFFFFF;
+}
+
+.testimonial .author-descriptor p {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
 
 footer {
     background-color: #1C1C1C;
@@ -262,4 +232,129 @@ footer p {
 .success-message {
     color: #4CAF50;
     /* Green for Success Messages */
+}
+
+
+
+.header {
+    padding: 5px;
+    background-color: var(--tomorrow-blue-colour);
+    position: sticky;
+    top: 0;
+}
+
+/*Hero Section*/
+.hero-section {
+    background: url('images/header1.png') no-repeat center center;
+    background-color: black;
+    background-size: cover;
+    min-height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+
+.hero-section h1 {
+    font-weight: bold;
+    color: var(--tomorrow-blue-colour);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 120px;
+}
+
+.hero-section p {
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+.btn-start {
+    background-color: var(--tomorrow-coral-colour) !important;
+    border: none;
+    border-radius: 120px !important;
+    color: black;
+    font-weight: 400;
+    font-size: 25px;
+}
+
+.title {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 0;
+}
+
+.svg-icon {
+    position: absolute;
+    top: -20px;
+    right: -60px;
+    width: 50px;
+    height: 50px;
+}
+
+/*Why Section */
+.why-section {
+    background-color: #222;
+    background-image: url('images/wave-blue.png');
+    color: white;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.why-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+}
+
+.problem,
+.solution {
+    background-color: #0B0B0B;
+    padding: 30px;
+    border-radius: 0px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.problem h3,
+.solution h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.problem p,
+.solution p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.arrow-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.arrow {
+    font-size: 4rem;
+    color: #5a8dee;
+}
+
+.container-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+@media (max-width: 768px) {
+    .container-boxes {
+        flex-direction: column;
+    }
+
+    .arrow {
+        margin: 20px 0;
+    }
 }

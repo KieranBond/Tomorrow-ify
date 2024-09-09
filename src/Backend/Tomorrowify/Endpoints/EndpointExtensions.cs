@@ -9,7 +9,6 @@ public static class EndpointExtensions {
     public static void RegisterEndpoints(this WebApplication app)
     {
         app.MapPost("/signup/{token}", SignupToken);
-        app.MapPost("/updatePlaylists", UpdatePlaylistsForAllUsers);
         app.MapPost("/updatePlaylists/{refreshToken}", UpdatePlaylistsForUser);
     }
 
@@ -37,8 +36,12 @@ public static class EndpointExtensions {
         var user = await spotify.UserProfile.Current();
         
         await tokenRepository.SaveToken(user.Id, refreshToken);
-
         logger.Information("Saved {refreshToken} for {userId} with {token}", refreshToken, user.Id, token);
+
+        await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Today"));
+        await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Tomorrow"));
+        logger.Information("Created Today and Tomorrow playlist for {userId}", user.Id);
+
 
         return Results.Ok(refreshToken);
     }
@@ -95,22 +98,6 @@ public static class EndpointExtensions {
                 );
             }
         }
-
-        return Results.Ok();
-    }
-
-    private static async Task<IResult> UpdatePlaylistsForAllUsers(IRefreshTokenRepository tokenRepository, TomorrowifyConfiguration configuration)
-    {
-        var tokenDtos = await tokenRepository.GetAllTokens();
-
-        await Parallel.ForEachAsync(tokenDtos, async (tokenDto, _) =>
-        {
-            try
-            {
-                await UpdatePlaylistsForUser(tokenDto.Token, configuration);
-            }
-            catch { }
-        });
 
         return Results.Ok();
     }

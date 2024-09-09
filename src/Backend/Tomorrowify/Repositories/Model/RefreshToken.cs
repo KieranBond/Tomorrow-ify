@@ -3,7 +3,7 @@ using Amazon.DynamoDBv2.DataModel;
 namespace Tomorrowify.Repositories.Model;
 
 [DynamoDBTable(Constants.DynamoDbTableName)]
-internal sealed record RefreshToken 
+public sealed record RefreshToken 
 {
     [DynamoDBHashKey] //Partition key
     public string Key { get; set; } = string.Empty;
