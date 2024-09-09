@@ -128,6 +128,19 @@ section {
     background-size: cover;
 }
 
+#cta h2 {
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+#cta p {
+    font-size: 1.1em;
+    padding-top: 1%;
+    color: #FFFFFF;
+    padding-left: 35%;
+    padding-right: 35%;
+}
+
 /* Additional Styles */
 
 .features-grid {
