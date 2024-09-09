@@ -121,12 +121,10 @@ section {
 }
 
 #cta {
-    background-color: #1C1C1C;
-    /* Slightly Darker Gray for Better Contrast */
-    color: #E0E0E0;
-    /* High Contrast Text Color */
-    border: 1px solid #333333;
-    /* Adds a border to separate from the main content */
+    background-image: url('images/wave-blue.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 /* Additional Styles */
