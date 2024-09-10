@@ -23,8 +23,8 @@
 <body>
     <div class="header"></div>
 
-    <div class="hero-section">
-        <div class="hero-content">
+    <div id="hero-section" class="overlay">
+        <div class="overlay-content">
             <h1 class="title">TOMORROWIFY</h1>
             <p class="mt-4">Your personal playlist manager for Spotify.<br>Keep your listening session fresh and organised.</p>
             <a href="#cta" class="mt-4 btn btn-lg px-4 py-3 fw-bold button primary-button ">START ORGANISING</a>
@@ -32,10 +32,10 @@
     </div>
 
     <!-- Problem Section -->
-    <section class="why-section">
+    <section class="why-section wave-bg wave-blue">
         <h2>WHY TOMORROWIFY?</h2>
         <div class="container container-boxes">
-            <div class="col-md-4 problem">
+            <div class="col-md-5 problem">
                 <h3>THE PROBLEM</h3>
                 <p>Ever find yourself wanting to listen to a song your friend sent you, but it's not the right moment?
                     Or are you stuck with a playlist that doesn’t match your vibe? Tomorrowify has the solution!</p>
@@ -43,7 +43,7 @@
             <div class="arrow-container">
                 <div class="arrow">➔</div>
               </div>
-            <div class="col-md-4 solution">
+            <div class="col-md-5 solution">
                 <h3>THE SOLUTION</h3>
                 <p>
                     Tomorrowify creates two playlists for you: Today and Tomorrow. It automatically updates your Today
@@ -61,53 +61,65 @@
     <section id="features">
         <h2>Features</h2>
         <div class="features-grid">
-            <div class="feature">
+            <div class="feature col-sm-4">
                 <i class="fa fa-sync-alt fa-2xl"></i>
-                <h3>AUTOMATIC UPDATES</h3>
+                <h5>AUTOMATIC UPDATES</h5>
                 <p>Seamlessly keep your playlists organized without any manual effort.</p>
             </div>
-            <div class="feature">
+            <div class="feature col-sm-4">
                 <i class="fa-solid fa-plug fa-2xl"></i>
-                <h3>EASY SETUP</h3>
+                <h5>EASY SETUP</h5>
                 <p>Quickly integrate with your Spotify account and start organizing.</p>
             </div>
-            <div class="feature">
+            <div class="feature col-sm-4">
                 <i class="fa-solid fa-clock fa-2xl"></i>
-                <h3>TIME SAVER</h3>
+                <h5>TIME SAVER</h5>
                 <p>Spend less time searching, more time vibing to your music.</p>
             </div>
         </div>
     </section>
 
     <!-- Testimonials Section -->
-    <section id="testimonials">
-        <h2>WHAT OUR USERS SAY</h2>
-        <div class="testimonial">
-            <div class="author-photo">
-                <img alt="Author Photo"
-                src="images/cheema.png" />
+    <section id="testimonials" class="overlay">
+        <div class="overlay-content">
+            <h2>WHAT OUR USERS SAY</h2>
+            <div class="testimonial">
+                <div class="author-photo">
+                    <img alt="Author Photo"
+                    src="images/cheema.png" />
+                </div>
+                <blockquote>
+                    “This is the shit!”
+                </blockquote>
+                <div class="author-descriptor">
+                    <p>ASHLEY CHEEMA</p>
+                    <p2>Music Enthusiast and Blogger</p2>
+                </div>
             </div>
-            <blockquote>
-                “This is the shit!”
-            </blockquote>
-            <div class="author-descriptor">
-                <p>ASHLEY CHEEMA</p>
-                <p2>Music Enthusiast and Blogger</p2>
+            <!-- Let's get some actual users first?
+            <div class="testimonial">
+                <p>"I love how effortless it is to keep my playlists fresh. Tomorrowify is a game changer!"</p>
+                <p>- Jordan S.</p>
             </div>
+             -->
         </div>
-        <!-- Let's get some actual users first?
-        <div class="testimonial">
-            <p>"I love how effortless it is to keep my playlists fresh. Tomorrowify is a game changer!"</p>
-            <p>- Jordan S.</p>
-        </div>
-         -->
+        
     </section>
 
     <!-- Call to Action Section -->
-    <section id="cta" class="accent-background">
-        <h2>READY TO GET STARTED?</h2>
-        <p>Organize your music effortlessly and enhance your listening experience. Sign up for Tomorrowify today!</p>
-        <a href="#" class="cta-button">Get Started</a>
+    <section id="cta" class="wave-bg wave-white">
+        <div class="container">
+            <h2>READY TO GET STARTED?</h2>
+            <p>Organize your music effortlessly and enhance your listening experience. Sign up for Tomorrowify today!</p>
+            <div class="row flex">
+                <div class="spotify"></div>
+                <a href="#" class="button cta-button">Log in with Spotify</a>
+            </div>
+               
+           
+            
+        </div>
+       
     </section>
 
     <!-- Footer Section -->
