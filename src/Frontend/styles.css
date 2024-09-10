@@ -111,7 +111,6 @@ p {
 .primary-button{
     background-color: var(--tomorrow-coral-colour);
     color: black;
-    
 }
 
 .primary-button:hover{
@@ -120,6 +119,21 @@ p {
     outline-width: 5px;
     outline-style: solid;
     color: var(--tomorrow-coral-colour);
+}
+
+.secondary-button{
+    background-color: var(--tomorrow-blue-colour);
+    color: var(--bg-color-darkest);
+    width: fit-content;
+    margin: auto;
+}
+
+.secondary-button:hover{
+    background-color: transparent;
+    outline: var(--tomorrow-blue-colour);
+    outline-width: 5px;
+    outline-style: solid;
+    color: var(--tomorrow-blue-colour);
 }
 
 /* Call-to-Action Button */
@@ -486,23 +500,107 @@ footer p {
     }
 }
 
+/* Sign up Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--bg-color-mid);
+    padding: 30px;
+    max-width: 90vw; /* Default Value for Extra Small Devices */
+    min-width: 300px;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--main-light-color);
+}
+
+.modal-body {
+    margin-top: 10px;
+}
+
+.modal-body p{
+    text-align: left;
+}
+
+.modal-body label {
+    display: block;
+    margin-bottom: 0.5rem;
+    text-align: right;
+    width: 20%;
+    margin: auto;
+    padding: 0px;
+    padding-right: 20px;
+    
+}
+
+.modal-body input {
+    width: 80%;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    height: 50px;
+}
+
+#signup-form{
+    margin-top: 40px;
+}
+
+#signup-form .row{
+    margin: 30px 0px;
+}
+
+#form-feedback{
+    text-align: center;
+}
+
+.modal-button{
+    font-size: 1rem;
+}
 
 /* Bootstrap Break point for responsive text */
 /* Using rem is relative to the root font-size */
 
 html {
     font-size: 10px; /* Default for extra small devices */
+    
 }
 
 @media (min-width: 576px) {
     html {
         font-size: 14px; /* Small devices */
     }
+    
 }
 
 @media (min-width: 768px) {
     html {
         font-size: 16px; /* Medium devices */
+        
+    }
+    .modal-content {
+        max-width: 60vw;
     }
 }
 
