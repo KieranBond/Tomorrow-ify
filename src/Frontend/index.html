@@ -26,7 +26,7 @@
             <a href="#cta" class="mt-4 btn btn-lg px-4 py-3 fw-bold button primary-button ">START ORGANISING</a>
         </div>
     </div>
-
+    
     <!-- Problem Section -->
     <section class="why-section wave-bg wave-blue">
         <h2>WHY TOMORROWIFY?</h2>
@@ -130,18 +130,33 @@
             </div>
             <div class="modal-body">
                 <p>Are you as excited about Tomorrowify as we are? Well add your name an email address to our email list, and we'll be sure to keep you in the loop about any news and updates!</p>
-                <form id="signup-form">
+                <form id="mc-embedded-subscribe-form" 
+                action="https://tomorrowify.us11.list-manage.com/subscribe/post?u=ceeb1f86e64ed5c2123fee379&amp;id=6d9b34ec59&amp;f_id=002fb5e0f0"
+                method="post" name="mc-embedded-subscribe-form" class="validate"
+                target="_blank" >
                     <div class="row">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" required>
+                        <label for="mce-FNAME">Name:</label>
+                        <input type="text" id="mce-FNAME" name="FNAME" required>
                     </div>
                     <div class="row">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
+                        <label for="mce-EMAIL">Email:</label>
+                        <input type="email" id="mce-EMAIL" name="EMAIL" required>
+                    </div>
+                    <div id="mce-responses" class="clear foot"></div>
+                        <div class="response" id="mce-error-response" style="display: none;"></div>
+                        <div class="response" id="mce-success-response" style="display: none;"></div>
+                    </div>
+                    <div aria-hidden="true" style="position: absolute; left: -5000px;">
+                        /* real people should not fill this in and expect good things - do not remove this or risk form bot
+                        signups */
+                        <input type="text" name="b_ceeb1f86e64ed5c2123fee379_6d9b34ec59" tabindex="-1" value="">
                     </div>
                     <p id="form-feedback"></p>
                     <button id="submitRegister" class="mt-4 btn btn-lg px-4 py-3 fw-bold button primary-button modal-button" type="submit">SUBSCRIBE</button>
                 </form>
+                <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
+                <script type="text/javascript">(function ($) { window.fnames = new Array(); window.ftypes = new Array(); fnames[0] = 'EMAIL'; ftypes[0] = 'email'; fnames[1] = 'FNAME'; ftypes[1] = 'text'; fnames[2] = 'LNAME'; ftypes[2] = 'text'; fnames[3] = 'ADDRESS'; ftypes[3] = 'address'; fnames[4] = 'PHONE'; ftypes[4] = 'phone'; fnames[5] = 'BIRTHDAY'; ftypes[5] = 'birthday'; fnames[6] = 'COMPANY'; ftypes[6] = 'text'; }(jQuery)); var $mcj = jQuery.noConflict(true);
+                </script>
             </div>
         </div>
     </div>
