@@ -1,6 +1,9 @@
 :root {
     --tomorrow-blue-colour: #5AACF6;
     --tomorrow-coral-colour: #F5615B;
+
+    --heading-font: "Josefin Sans", sans-serif;
+    --body-font: 'Montserrat', sans-serif;
 }
 
 html {
@@ -8,7 +11,8 @@ html {
 }
 
 body {
-    font-family: "Josefin Sans", sans-serif !important;
+    font-family: var(--body-font);
+   
     background-color: #121212;
     /* Dark Charcoal Background */
     color: #E0E0E0;
@@ -16,6 +20,32 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: var(--heading-font);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+h1{
+    font-size: 2.5rem;
+}
+
+h2{
+    font-size: 2rem;
+}
+
+h3{
+    font-size: 1.5rem;
+}
+
+h4{
+    font-size: 1.25rem;
+}
+
+h5{
+    font-size: 1rem;
 }
 
 /* General Styles */
@@ -47,18 +77,42 @@ header {
 
 
 h1 {
-    font-size: 3em;
+    /* font-size: 3em; */
     /* Larger size for better prominence */
-    margin-bottom: 0.5em;
+    margin-bottom: 0.5rem;
     color: #FFFFFF;
     /* Main Header Text Color */
 }
 
 p {
-    font-size: 1.2em;
+    /* font-size: 1rem; */
     color: #FFFFFF;
-    line-height: 1.6;
+    line-height: 1.5;
     /* Slightly increased for readability */
+}
+
+/* Default for all buttons */
+.button{ 
+    border: none;
+    border-radius: 120px !important;
+    padding: 1rem 3rem !important;
+    font-weight: 400;
+    font-family: var(--body-font);
+}
+
+/* Specific for primary buttons */
+.primary-button{
+    background-color: var(--tomorrow-coral-colour);
+    color: black;
+    
+}
+
+.primary-button:hover{
+    background-color: transparent;
+    outline: var(--tomorrow-coral-colour);
+    outline-width: 5px;
+    outline-style: solid;
+    color: var(--tomorrow-coral-colour);
 }
 
 /* Call-to-Action Button */
@@ -69,7 +123,7 @@ p {
     color: #FFFFFF;
     text-decoration: none;
     border-radius: 50px;
-    font-size: 1.2em;
+    /* font-size: 1rem; */
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     margin-top: 20px;
@@ -108,7 +162,7 @@ section {
     background-image: linear-gradient(var(--tomorrow-blue-colour), #B2CBE1);
 }
 
-#features h1 {
+#features h2, #features h3 {
     color: #0B0B0B;
     /* Feature Header Text Color */
 }
@@ -134,7 +188,7 @@ section {
 }
 
 #cta p {
-    font-size: 1.1em;
+    /* font-size: 1rem; */
     padding-top: 1%;
     color: #FFFFFF;
     padding-left: 35%;
@@ -157,7 +211,7 @@ section {
 }
 
 .feature h3 {
-    font-size: 1.6em;
+    /* font-size: 1.5rem; */
     margin-bottom: 0.5em;
     color: #0B0B0B;
     /* Feature Header Text Color */
@@ -165,7 +219,7 @@ section {
 
 .feature p {
     color: #0B0B0B;
-    font-size: 1em;
+    /* font-size: 1em; */
     /* Feature Description Text Color */
 }
 
@@ -182,7 +236,7 @@ section {
     padding: 20px;
     margin: 0 auto;
     font-weight: bold;
-    font-size: 3em;
+    font-size: 3rem;
     color: var(--tomorrow-blue-colour);
 }
 
@@ -200,7 +254,7 @@ section {
 }
 
 .testimonial .author-descriptor p {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #FFFFFF;
 }
@@ -235,7 +289,6 @@ footer p {
 }
 
 
-
 .header {
     padding: 5px;
     background-color: var(--tomorrow-blue-colour);
@@ -245,6 +298,7 @@ footer p {
 
 /*Hero Section*/
 .hero-section {
+    position: relative;
     background: url('images/header1.png') no-repeat center center;
     background-color: black;
     background-size: cover;
@@ -253,31 +307,38 @@ footer p {
     align-items: center;
     justify-content: center;
     text-align: center;
+   
 }
 
+.hero-section:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
+    z-index: 1; 
+}
 
+.hero-section .hero-content{
+    position: relative;
+    z-index: 2;
+}
 
 .hero-section h1 {
     font-weight: bold;
     color: var(--tomorrow-blue-colour);
     font-style: normal;
     font-weight: 700;
-    font-size: 120px;
+    font-size: 4rem;
 }
 
 .hero-section p {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: #ffffff;
 }
 
-.btn-start {
-    background-color: var(--tomorrow-coral-colour) !important;
-    border: none;
-    border-radius: 120px !important;
-    color: black;
-    font-weight: 400;
-    font-size: 25px;
-}
 
 .title {
     display: inline-block;
@@ -356,5 +417,43 @@ footer p {
 
     .arrow {
         margin: 20px 0;
+    }
+}
+
+
+/* Bootstrap Break point for responsive text */
+/* Using rem is relative to the root font-size */
+
+html {
+    font-size: 12px; /* Default for extra small devices */
+}
+
+@media (min-width: 576px) {
+    html {
+        font-size: 14px; /* Small devices */
+    }
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px; /* Medium devices */
+    }
+}
+
+@media (min-width: 992px) {
+    html {
+        font-size: 18px; /* Large devices */
+    }
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 20px; /* Extra large devices */
+    }
+}
+
+@media (min-width: 1400px) {
+    html {
+        font-size: 22px; /* XX-Large devices */
     }
 }
