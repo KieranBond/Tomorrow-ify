@@ -19,44 +19,6 @@ window.addEventListener('click', (event) => {
     }
 });
 
-form.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    // Derive formdata from the submit form
-    const formData = new FormData(form);
-
-    // Convert FormData to a plain object
-    const dataObject = {};
-    formData.forEach((value, key) => {
-        dataObject[key] = value;
-    });
-
-    //Log Form Data
-    console.log('Form Data:', dataObject);
-
-    /* Example of submitting form to somewhere using fetch
-        fetch('/submit-form', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(dataObject),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            formMessage("You have been added to our mailing list.", true);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            formMessage("Oops, something went wrong... Please try again shortly.", false);
-        });
-
-        */
-
-});
-
-
 function formMessage(message, isSuccess){
 
     // Message displays the message to the user

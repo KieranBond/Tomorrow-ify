@@ -74,6 +74,14 @@ header {
     /* Add space below header */
 }
 
+.header{
+    padding: 5px;
+    background-color: var(--tomorrow-blue-colour);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
 .header-content {
     background-color: rgba(0, 0, 0, 0.9);
     padding: 30px;
@@ -82,12 +90,12 @@ header {
     z-index: 1;
 }
 
-
 h1 {
     /* font-size: 3em; */
     /* Larger size for better prominence */
     margin-bottom: 0.5rem;
     color: var(--main-light-color);
+    font-family: var(--heading-font);
     /* Main Header Text Color */
 }
 
@@ -371,16 +379,12 @@ footer p {
 }
 
 
-.header {
-    padding: 5px;
-    background-color: var(--tomorrow-blue-colour);
-    position: sticky;
-    top: 0;
-}
+
 
 /*Hero Section*/
 #hero-section{
     background: url('images/header.jpg') no-repeat center center;
+    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -584,7 +588,14 @@ footer p {
 
 html {
     font-size: 10px; /* Default for extra small devices */
-    
+}
+
+.arrow {
+    transform: rotate(90deg);
+}
+
+#hero-section{
+    background-position: 20% center;
 }
 
 @media (min-width: 576px) {
@@ -602,17 +613,30 @@ html {
     .modal-content {
         max-width: 60vw;
     }
+    .arrow {
+        transform: rotate(0deg);
+    }
+    #hero-section{
+        background-position: 30% center;
+    }
+
 }
 
 @media (min-width: 992px) {
     html {
         font-size: 18px; /* Large devices */
     }
+    #hero-section{
+        background-position: 40% center;
+    }
 }
 
 @media (min-width: 1200px) {
     html {
         font-size: 20px; /* Extra large devices */
+    }
+    #hero-section{
+        background-position: 50% center;
     }
 }
 
