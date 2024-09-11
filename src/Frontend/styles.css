@@ -1,6 +1,16 @@
 :root {
     --tomorrow-blue-colour: #5AACF6;
     --tomorrow-coral-colour: #F5615B;
+    --spotify-green-color: #1ED760;
+
+    --bg-color-darkest: #0B0B0B;
+    --bg-color-mid: #212121;
+    --bg-color-light: #404040;
+
+    --main-light-color: #E0E0E0;
+
+    --heading-font: "Josefin Sans", sans-serif;
+    --body-font: 'Montserrat', sans-serif;
 }
 
 html {
@@ -8,14 +18,41 @@ html {
 }
 
 body {
-    font-family: "Josefin Sans", sans-serif !important;
-    background-color: #121212;
+    font-family: var(--body-font);
+   
+    background-color: var(--bg-color-mid);
     /* Dark Charcoal Background */
-    color: #E0E0E0;
+    color: var(--main-light-color);
     /* Main Text Color */
     margin: 0;
     padding: 0;
     text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: var(--body-font);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+h1{
+    font-size: 2.5rem;
+}
+
+h2{
+    font-size: 2rem;
+}
+
+h3{
+    font-size: 1.5rem;
+}
+
+h4{
+    font-size: 1.25rem;
+}
+
+h5{
+    font-size: 1rem;
 }
 
 /* General Styles */
@@ -37,6 +74,14 @@ header {
     /* Add space below header */
 }
 
+.header{
+    padding: 5px;
+    background-color: var(--tomorrow-blue-colour);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
 .header-content {
     background-color: rgba(0, 0, 0, 0.9);
     padding: 30px;
@@ -45,46 +90,107 @@ header {
     z-index: 1;
 }
 
-
 h1 {
-    font-size: 3em;
+    /* font-size: 3em; */
     /* Larger size for better prominence */
-    margin-bottom: 0.5em;
-    color: #FFFFFF;
+    margin-bottom: 0.5rem;
+    color: var(--main-light-color);
+    font-family: var(--heading-font);
     /* Main Header Text Color */
 }
 
 p {
-    font-size: 1.2em;
-    color: #FFFFFF;
-    line-height: 1.6;
+    /* font-size: 1rem; */
+    color: var(--main-light-color);
+    line-height: 1.5;
     /* Slightly increased for readability */
+}
+
+/* Default for all buttons */
+.button{ 
+    border: none;
+    border-radius: 120px !important;
+    padding: 1rem 3rem !important;
+    font-weight: 400;
+    font-family: var(--body-font);
+}
+
+/* Specific for primary buttons */
+.primary-button{
+    background-color: var(--tomorrow-coral-colour);
+    color: black;
+}
+
+.primary-button:hover{
+    background-color: transparent;
+    outline: var(--tomorrow-coral-colour);
+    outline-width: 5px;
+    outline-style: solid;
+    color: var(--tomorrow-coral-colour);
+}
+
+.secondary-button{
+    background-color: var(--tomorrow-blue-colour);
+    color: var(--bg-color-darkest);
+    width: fit-content;
+    margin: auto;
+}
+
+.secondary-button:hover{
+    background-color: transparent;
+    outline: var(--tomorrow-blue-colour);
+    outline-width: 5px;
+    outline-style: solid;
+    color: var(--tomorrow-blue-colour);
 }
 
 /* Call-to-Action Button */
 .cta-button {
     display: inline-block;
-    padding: 14px 28px;
-    background-color: #22994b;
-    color: #FFFFFF;
+    background-color: var(--spotify-green-color);
+    color: var(--bg-color-darkest);
+    font-family: var(--body-font);
+    font-weight: 700;
     text-decoration: none;
-    border-radius: 50px;
-    font-size: 1.2em;
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    margin-top: 20px;
+    width: fit-content;
+    
 }
 
 .cta-button:hover {
-    background-color: #14612F;
+    background-color: #22994b;
+    color: black;
     /* Darker Green for Hover */
+}
+
+#cta .spotify{
+    min-height: 64px;
+    min-width: 64px;
+    height: 64px;
+    width: 64px;
+    border-radius: 100%;
+    background-color: #000000;
+    color: #1ED760 !important;
+    margin: -1px;
+    background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' fill='%231ED760' class='bi bi-spotify' viewBox='0 0 16 16'%3E%3Cpath d='M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.669 11.538a.5.5 0 0 1-.686.165c-1.879-1.147-4.243-1.407-7.028-.77a.499.499 0 0 1-.222-.973c3.048-.696 5.662-.397 7.77.892a.5.5 0 0 1 .166.686m.979-2.178a.624.624 0 0 1-.858.205c-2.15-1.321-5.428-1.704-7.972-.932a.625.625 0 0 1-.362-1.194c2.905-.881 6.517-.454 8.986 1.063a.624.624 0 0 1 .206.858m.084-2.268C10.154 5.56 5.9 5.419 3.438 6.166a.748.748 0 1 1-.434-1.432c2.825-.857 7.523-.692 10.492 1.07a.747.747 0 1 1-.764 1.288'/%3E%3C/svg%3E");
+    background-size: calc(100% + 2px);
+    background-position: -1px -1px; 
+    background-repeat: no-repeat;
+}
+
+#cta .flex{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    justify-content: center;
 }
 
 /* Section Styles */
 section {
-    padding: 60px 20px;
+    padding: 100px 0px ;
     margin: 0 auto;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     /* Add shadow for depth */
     background-color: #2C2C2C;
@@ -93,14 +199,48 @@ section {
     /* Main Text Color */
 }
 
+
+/* Wave Background Accent Styling */
+.wave-bg{
+    background-color: transparent !important;
+    position: relative;
+}
+
+.wave-bg::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover; 
+    background-position: center;
+    opacity: 0.15; 
+    z-index: -1; 
+}
+
+.wave-blue::before{
+    background-image: url('images/wave-blue-01a.png');
+}
+
+.wave-white::before{
+    background-image: url('images/wave-white-01a.png');
+    opacity: 0.05; 
+}
+
+
+section h2{
+    margin-bottom: 50px;
+}
+
 /* Specific Section Backgrounds */
 #problem {
-    background-color: #2C2C2C;
+    background-color: var(--bg-color-mid)
     /* Medium Dark Gray */
 }
 
 #solution {
-    background-color: #1E1E1E;
+    background-color: var(--bg-color-darkest)
     /* Very Dark Gray */
 }
 
@@ -108,64 +248,67 @@ section {
     background-image: linear-gradient(var(--tomorrow-blue-colour), #B2CBE1);
 }
 
-#features h1 {
-    color: #0B0B0B;
+#features h2, #features h3 {
+    color: var(--bg-color-darkest);
     /* Feature Header Text Color */
 }
 
 #testimonials {
-    background: url('images/testimonial.png');
+    position: relative;
+    background: url('images/testimonial.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 #cta {
-    background-image: url('images/wave-blue.png');
-    background-position: center;
+    background-color: var(--bg-color-mid);
     background-repeat: no-repeat;
     /* background-size: 100% 100%; */
     background-size: cover;
+    background-position: reverse;
 }
 
 #cta h2 {
-    font-weight: bold;
-    color: #FFFFFF;
+   
+    color: var(--main-light-color);
 }
 
 #cta p {
-    font-size: 1.1em;
     padding-top: 1%;
-    color: #FFFFFF;
-    padding-left: 35%;
-    padding-right: 35%;
+    color: var(--main-light-color);
+    max-width: 600px;
+    margin: 50px auto;
 }
 
 /* Additional Styles */
 
 .features-grid {
     display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
 .feature {
-    width: 33vw;
+    flex: 1;
+    
 }
 
 .feature i {
-    margin: 20px auto 30px;
-    color: #0B0B0B;
+    margin: 2rem;
+    color: var(--bg-color-darkest);
 }
 
-.feature h3 {
-    font-size: 1.6em;
+.feature h5 {
+    margin-top: 1.25rem;
     margin-bottom: 0.5em;
-    color: #0B0B0B;
+    color: var(--bg-color-darkest);
     /* Feature Header Text Color */
 }
 
 .feature p {
-    color: #0B0B0B;
-    font-size: 1em;
+    color: var(--bg-color-darkest);
     /* Feature Description Text Color */
 }
 
@@ -182,13 +325,16 @@ section {
     padding: 20px;
     margin: 0 auto;
     font-weight: bold;
-    font-size: 3em;
+    font-size: 3rem;
     color: var(--tomorrow-blue-colour);
+    font-family: var(--heading-font);
 }
 
 .author-photo img {
     width: 10%;
     height: 10%;
+    min-height: 100px;
+    min-width: 100px;
     /* Ensure height matches width for a perfect circle */
     border-radius: 50%;
     /* Makes the image round */
@@ -196,26 +342,24 @@ section {
 }
 
 .testimonial .author-descriptor {
-    color: #FFFFFF;
+    color: var(--main-light-color);
 }
 
 .testimonial .author-descriptor p {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     font-weight: bold;
-    color: #FFFFFF;
+    color: var(--main-light-color);
 }
 
 
 footer {
-    background-color: #1C1C1C;
-    /* Slightly Darker Gray for Better Contrast */
+    background-color: #000000;
     color: #E0E0E0;
     /* Footer Text Color */
     padding: 20px 0;
-    border-radius: 8px;
     box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.5);
     /* Deeper shadow for more separation */
-    border-top: 2px solid #333333;
+    border-top: 5px solid var(--tomorrow-blue-colour);
     /* Adds a border to separate from the main content */
 }
 
@@ -236,48 +380,54 @@ footer p {
 
 
 
-.header {
-    padding: 5px;
-    background-color: var(--tomorrow-blue-colour);
-    position: sticky;
-    top: 0;
-}
 
 /*Hero Section*/
-.hero-section {
-    background: url('images/header1.png') no-repeat center center;
-    background-color: black;
+#hero-section{
+    background: url('images/header.jpg') no-repeat center center;
     background-size: cover;
-    min-height: 800px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    min-height: 100vh;
 }
 
+.overlay {
+    position: relative;
+    background-color: var(--bg-color-darkest);
+    background-size: cover;
+    
+}
 
+.overlay::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 1; 
+}
 
-.hero-section h1 {
+.overlay-content{
+    position: relative;
+    z-index: 2;
+}
+
+#hero-section h1 {
     font-weight: bold;
     color: var(--tomorrow-blue-colour);
     font-style: normal;
     font-weight: 700;
-    font-size: 120px;
+    font-size: 4rem;
 }
 
-.hero-section p {
-    font-size: 1.5rem;
-    color: #ffffff;
+#hero-section p {
+    font-size: 1.2rem;
+    color: var(--main-light-color);
 }
 
-.btn-start {
-    background-color: var(--tomorrow-coral-colour) !important;
-    border: none;
-    border-radius: 120px !important;
-    color: black;
-    font-weight: 400;
-    font-size: 25px;
-}
 
 .title {
     display: inline-block;
@@ -295,21 +445,16 @@ footer p {
 
 /*Why Section */
 .why-section {
-    background-color: #222;
-    background-image: url('images/wave-blue.png');
+    background-color: var(--bg-color-mid);
     color: white;
     padding: 50px 0;
     text-align: center;
 }
 
-.why-section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 50px;
-}
 
 .problem,
 .solution {
-    background-color: #0B0B0B;
+    background-color: var(--bg-color-darkest);
     padding: 30px;
     border-radius: 0px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -356,5 +501,147 @@ footer p {
 
     .arrow {
         margin: 20px 0;
+    }
+}
+
+/* Sign up Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--bg-color-mid);
+    padding: 30px;
+    max-width: 90vw; /* Default Value for Extra Small Devices */
+    min-width: 300px;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--main-light-color);
+}
+
+.modal-body {
+    margin-top: 10px;
+}
+
+.modal-body p{
+    text-align: left;
+}
+
+.modal-body label {
+    display: block;
+    margin-bottom: 0.5rem;
+    text-align: right;
+    width: 20%;
+    margin: auto;
+    padding: 0px;
+    padding-right: 20px;
+    
+}
+
+.modal-body input {
+    width: 80%;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    height: 50px;
+}
+
+#mc-embedded-subscribe-form{
+    margin-top: 40px;
+}
+
+#mc-embedded-subscribe-form .row{
+    margin: 30px 0px;
+}
+
+#form-feedback{
+    text-align: center;
+}
+
+.modal-button{
+    font-size: 1rem;
+}
+
+/* Bootstrap Break point for responsive text */
+/* Using rem is relative to the root font-size */
+
+html {
+    font-size: 10px; /* Default for extra small devices */
+}
+
+.arrow {
+    transform: rotate(90deg);
+}
+
+#hero-section{
+    background-position: 20% center;
+}
+
+@media (min-width: 576px) {
+    html {
+        font-size: 14px; /* Small devices */
+    }
+    
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px; /* Medium devices */
+        
+    }
+    .modal-content {
+        max-width: 60vw;
+    }
+    .arrow {
+        transform: rotate(0deg);
+    }
+    #hero-section{
+        background-position: 30% center;
+    }
+
+}
+
+@media (min-width: 992px) {
+    html {
+        font-size: 18px; /* Large devices */
+    }
+    #hero-section{
+        background-position: 40% center;
+    }
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 20px; /* Extra large devices */
+    }
+    #hero-section{
+        background-position: 50% center;
+    }
+}
+
+@media (min-width: 1400px) {
+    html {
+        font-size: 22px; /* XX-Large devices */
     }
 }

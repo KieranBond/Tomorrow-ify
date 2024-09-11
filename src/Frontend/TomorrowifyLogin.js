@@ -1,4 +1,5 @@
-function GetUserAgreement() {
+function GetUserAgreement(event) {
+  event.preventDefault();
   // Redirect the user to Spotify authorization endpoint
   var client_id = "0dd26d11f1f9480c926c221561c67c92";
 
