@@ -4,7 +4,7 @@ function GetUserAgreement(event) {
   var client_id = "0dd26d11f1f9480c926c221561c67c92";
 
   //Get the current URL
-  var redirect_uri = window.location.origin + window.location.pathname + "#cta";
+  var redirect_uri = window.location.origin + "/signedup";
   console.log("Offering redirect to: " + redirect_uri);
   var scope =
     "playlist-modify-public playlist-modify-private playlist-read-private";
