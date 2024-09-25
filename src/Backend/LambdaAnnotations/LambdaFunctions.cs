@@ -78,9 +78,18 @@ public class LambdaFunctions(IRefreshTokenRepository tokenRepository, Tomorrowif
         if (!tomorrowTracks.Any())
             return Results.Ok();
 
+        var firstTracksUris = tomorrowTracks.Take(100).Select(t => t!.Uri).ToList();
+
         await spotify.Playlists.ReplaceItems(todayPlaylist.Id!,
-            new PlaylistReplaceItemsRequest(tomorrowTracks.Take(100).Select(t => t!.Uri).ToList())
+            new PlaylistReplaceItemsRequest(firstTracksUris)
         );
+
+        await spotify.Playlists.RemoveItems(tomorrowPlaylist.Id!,
+                    new PlaylistRemoveItemsRequest()
+                    {
+                        Tracks = firstTracksUris.Select(uri => new Item() { Uri = uri }).ToList(),
+                    }
+                );
 
         if (tomorrowTracks.Count() > 100)
         {
@@ -88,14 +97,15 @@ public class LambdaFunctions(IRefreshTokenRepository tokenRepository, Tomorrowif
             var tracksToAdd = remainingTracks.Chunk(100);
             foreach (var chunk in tracksToAdd)
             {
+                var trackUris = chunk.Select(t => t!.Uri).ToList();
                 await spotify.Playlists.AddItems(todayPlaylist.Id!,
-                    new PlaylistAddItemsRequest(chunk.Select(t => t!.Uri).ToList())
+                    new PlaylistAddItemsRequest(trackUris)
                 );
 
                 await spotify.Playlists.RemoveItems(tomorrowPlaylist.Id!,
                     new PlaylistRemoveItemsRequest()
                     {
-                        Tracks = chunk.Select(t => new Item() { Uri = t!.Uri }).ToList(),
+                        Tracks = trackUris.Select(uri => new Item() { Uri = uri }).ToList(),
                     }
                 );
             }
