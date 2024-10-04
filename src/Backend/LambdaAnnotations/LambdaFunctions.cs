@@ -64,11 +64,11 @@ public class LambdaFunctions(IRefreshTokenRepository tokenRepository, Tomorrowif
 
         var tomorrowPlaylist =
             userPlaylists.FirstOrDefault(p => p.Name == "Tomorrow") ??
-            await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Tomorrow"));
+            await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Tomorrow") { Description = Constants.TomorrowPlaylistDescription });
 
         var todayPlaylist =
             userPlaylists.FirstOrDefault(p => p.Name == "Today") ??
-            await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Today"));
+            await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Today") { Description = Constants.TodayPlaylistDescription });
 
         var tomorrowTracks =
             (await spotify.PaginateAll(await spotify.Playlists.GetItems(tomorrowPlaylist.Id!)))

@@ -38,8 +38,8 @@ public static class EndpointExtensions {
         await tokenRepository.SaveToken(user.Id, refreshToken);
         logger.Information("Saved {refreshToken} for {userId} with {token}", refreshToken, user.Id, token);
 
-        await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Today"));
-        await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Tomorrow"));
+        await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Today") { Description = Constants.TodayPlaylistDescription });
+        await spotify.Playlists.Create(user.Id, new PlaylistCreateRequest("Tomorrow") { Description = Constants.TomorrowPlaylistDescription });
         logger.Information("Created Today and Tomorrow playlist for {userId}", user.Id);
 
 
