@@ -9,15 +9,18 @@ using SpotifyAPI.Web;
 using Tomorrowify;
 using Amazon.Lambda.CloudWatchEvents.ScheduledEvents;
 using static SpotifyAPI.Web.PlaylistRemoveItemsRequest;
+using Amazon.CloudWatch;
+using Amazon.CloudWatch.Model;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
 namespace LambdaAnnotations;
 
-public class LambdaFunctions(IRefreshTokenRepository tokenRepository, TomorrowifyConfiguration configuration)
+public class LambdaFunctions(IRefreshTokenRepository tokenRepository, TomorrowifyConfiguration configuration, IAmazonCloudWatch amazonCloudWatch)
 {
     private ILogger _logger = Log.ForContext<LambdaFunctions>();
 
+    private readonly IAmazonCloudWatch _amazonCloudWatch = amazonCloudWatch;
     private readonly IRefreshTokenRepository _tokenRepository = tokenRepository;
     private readonly TomorrowifyConfiguration _configuration = configuration;
 
@@ -78,6 +81,8 @@ public class LambdaFunctions(IRefreshTokenRepository tokenRepository, Tomorrowif
         if (!tomorrowTracks.Any())
             return Results.Ok();
 
+        await PublishMetric("TomorrowTracks", tomorrowTracks.Count());
+
         var firstTracksUris = tomorrowTracks.Take(100).Select(t => t!.Uri).ToList();
 
         await spotify.Playlists.ReplaceItems(todayPlaylist.Id!,
@@ -115,5 +120,24 @@ public class LambdaFunctions(IRefreshTokenRepository tokenRepository, Tomorrowif
         _logger.Information("Completed swap of playlist for {@user}", user);
 
         return Results.Ok();
+    }
+
+    private async Task<PutMetricDataResponse> PublishMetric(string metricName, int metricValue)
+    {
+        var metric = await _amazonCloudWatch.PutMetricDataAsync(new PutMetricDataRequest
+        {
+
+            MetricData = new List<MetricDatum>
+                {
+                    new MetricDatum
+                    {
+                        MetricName = metricName,
+                        Value = metricValue,
+                        TimestampUtc = DateTime.UtcNow
+                    }
+                },
+            Namespace = "TomorrowifyMetrics"
+        });
+        return metric;
     }
 }
