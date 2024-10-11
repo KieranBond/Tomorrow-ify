@@ -1,4 +1,5 @@
-﻿using Amazon.DynamoDBv2;
+﻿using Amazon.CloudWatch;
+using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.Model;
 using Amazon.Runtime;
@@ -19,6 +20,8 @@ public static class ServiceRegistration
         var config = configuration.Get<TomorrowifyConfiguration>();
         Guard.IsNotNull(config);
         serviceCollection.AddSingleton(config);
+
+        serviceCollection.AddTransient<IAmazonCloudWatch, AmazonCloudWatchClient>();
 
         serviceCollection.RegisterDynamoDB(isDevelopment, config);
 
