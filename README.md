@@ -1,4 +1,4 @@
-# Tomorrow-ify
+# Tomorrowify
 
 For tomorrow, Spotify.
 
