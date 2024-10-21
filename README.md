@@ -12,6 +12,8 @@ To run the website locally, you can use the `Make` command `make run-website`. T
 
 This requires you having `node` installed, and an `NPM` version of 5.2.0 or greater.
 
+It should get the website running in your local browser (with hot reloads) on `http://localhost:8080`.
+
 ### Backend
 
 To start the database, run `docker compose up` from the root folder. That will get an instance of [DynamoDB](https://aws.amazon.com/dynamodb/) running locally at `http://localhost:8000`.
